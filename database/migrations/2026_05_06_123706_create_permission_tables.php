@@ -17,7 +17,6 @@ return new class extends Migration
         throw_if(empty($tableNames), 'Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         throw_if($teams && empty($columnNames['team_foreign_key'] ?? null), 'Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
 
-        // Code Marker: Permissions
         Schema::create($tableNames['permissions'], static function (Blueprint $table) {
             $table->id();
             $table->string('name', 125);
@@ -26,7 +25,6 @@ return new class extends Migration
             $table->unique(['name', 'guard_name']);
         });
 
-        // Code Marker: Roles
         Schema::create($tableNames['roles'], static function (Blueprint $table) use ($teams, $columnNames) {
             $table->id();
             if ($teams || config('permission.testing')) {
@@ -44,7 +42,6 @@ return new class extends Migration
             }
         });
 
-        // Code Marker: Permissions
         Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
             $table->unsignedBigInteger($pivotPermission);
             $table->string('model_type', 191);
@@ -63,7 +60,6 @@ return new class extends Migration
             }
         });
 
-        // Code Marker: Roles
         Schema::create($tableNames['model_has_roles'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
             $table->unsignedBigInteger($pivotRole);
             $table->string('model_type', 191);
@@ -82,7 +78,6 @@ return new class extends Migration
             }
         });
 
-        // Code Marker: Permissions
         Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
             $table->unsignedBigInteger($pivotPermission);
             $table->unsignedBigInteger($pivotRole);

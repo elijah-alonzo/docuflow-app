@@ -245,18 +245,6 @@ return [
 
     'custom_permissions' => [
         'ViewDashboardStats',
-        'ManageFacultyLoads',
-        'ViewAny:GradingSheetApproval',
-        'View:GradingSheetApproval',
-        'Update:GradingSheetApproval',
-        'ViewAny:PendingGradingSheet',
-        'View:PendingGradingSheet',
-        'Update:PendingGradingSheet',
-        'ViewAny:EndorsedGradingSheet',
-        'View:EndorsedGradingSheet',
-        'Update:EndorsedGradingSheet',
-        'View:MyAssignedGradingSheetsWidget',
-        'View:AcademicContextWidget',
     ],
 
     /*

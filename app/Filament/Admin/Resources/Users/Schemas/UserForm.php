@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Users\Schemas;
 
-use App\Models\Program;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -71,9 +70,7 @@ class UserForm
                                 ->pluck('name', 'name')
                                 ->all())
                             ->prefixIcon('heroicon-m-shield-check')
-                            ->required()
                             ->default(fn (): ?string => Role::query()->where('name', '!=', 'Admin')->orderBy('name')->value('name'))
-                            ->live()
                             ->afterStateHydrated(function ($set, $record): void {
                                 $role = $record?->roles?->pluck('name')->first();
 
@@ -82,19 +79,6 @@ class UserForm
                                 }
                             })
                             ->dehydrated()
-                            ->columnSpan(3),
-
-                        Select::make('program_id')
-                            ->label('Program')
-                            ->options(fn (): array => Program::query()
-                                ->orderBy('name')
-                                ->pluck('name', 'id')
-                                ->all())
-                            ->searchable()
-                            ->preload()
-                            ->placeholder('Select program')
-                            ->visible(fn ($get): bool => in_array($get('role'), ['Registrar', 'Faculty'], true))
-                            ->required(fn ($get): bool => in_array($get('role'), ['Registrar', 'Faculty'], true))
                             ->columnSpan(3),
 
                         TextInput::make('password')

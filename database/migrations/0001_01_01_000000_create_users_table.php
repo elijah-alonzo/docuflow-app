@@ -16,10 +16,6 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('contact_number')->nullable();
-            $table->foreignId('program_id')
-                ->nullable()
-                ->constrained('programs')
-                ->nullOnDelete();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

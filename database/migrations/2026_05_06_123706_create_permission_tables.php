@@ -32,7 +32,7 @@ return new class extends Migration
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
             $table->string('name', 125);
-            $table->text('description')->nullable()->after('name');
+            $table->text('description')->nullable();
             $table->string('guard_name', 125);
             $table->timestamps();
             if ($teams || config('permission.testing')) {

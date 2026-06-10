@@ -8,16 +8,16 @@ use App\Filament\Admin\Resources\DocumentResource\Pages\CreateDocument;
 use App\Filament\Admin\Resources\DocumentResource\Pages\EditDocument;
 use App\Filament\Admin\Resources\DocumentResource\Pages\ListDocuments;
 use BackedEnum;
-use Filament\Resources\Resource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Schemas\Components\Placeholder;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
 use UnitEnum;
 
 class DocumentResource extends Resource
@@ -48,10 +48,8 @@ class DocumentResource extends Resource
                     ->required()
                     ->disk('public')
                     ->directory('documents'),
-                Placeholder::make('timeline')
-                    ->label('')
-                    ->visible(fn ($record) => $record !== null)
-                    ->content(fn ($record) => $record ? view('admin.documenttimeline.holder', ['document' => $record]) : null)
+                View::make('admin.documenttimeline.holder')
+                    ->visible(fn ($record): bool => $record !== null)
                     ->columnSpanFull(),
             ]);
     }
@@ -89,7 +87,7 @@ class DocumentResource extends Resource
                     ->sortable(),
             ])
             ->filters([])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ]);

@@ -6,7 +6,6 @@ use App\Filament\Admin\Resources\DocumentApprovalResource;
 use App\Models\Document;
 use App\Services\WorkflowEngine;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Components\View;
@@ -74,17 +73,14 @@ class ViewDocumentApproval extends ViewRecord
         return $schema
             ->columns(3)
             ->components([
-                Placeholder::make('document_preview')
-                    ->label('Document File Preview')
+                View::make('admin.documentapproval.preview')
                     ->columnSpan(2)
-                    ->content(fn (Document $record): HtmlString => $this->renderPreview($record)),
-                
-                Placeholder::make('right_column')
-                    ->label('')
-                    ->columnSpan(1)
-                    ->content(fn (Document $record): HtmlString => new HtmlString(
-                        view('admin.documenttimeline.holder', ['document' => $record])->render()
-                    )),
+                    ->viewData(fn (Document $record): array => [
+                        'previewHtml' => $this->renderPreview($record),
+                    ]),
+
+                View::make('admin.documenttimeline.holder')
+                    ->columnSpan(1),
             ]);
     }
 

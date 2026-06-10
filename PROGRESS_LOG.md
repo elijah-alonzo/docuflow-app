@@ -34,6 +34,22 @@
 - [x] Fixed permission_tables migration (`description` column `after()` clause invalid on CREATE TABLE).
 - [x] Verified with `php artisan migrate:fresh --seed` — all migrations and seeding pass.
 
-## Next Steps (Phase 2 — Filament v5 namespaces)
+## Phase 2 — Fix Filament v5 namespaces (complete)
 
-- Fix `WorkflowResource`, `DocumentTypeResource`, `DocumentResource`, `DocumentApprovalResource` to use `Filament\Forms\Components`, `Filament\Actions`, and `recordActions()` table API.
+- [x] `WorkflowResource`: form components moved to `Filament\Forms\Components`; deprecated `Placeholder` replaced with `Filament\Schemas\Components\View`; actions moved to `Filament\Actions`; table API switched to `recordActions()`.
+- [x] `DocumentTypeResource`: same namespace + `recordActions()` migration.
+- [x] `DocumentResource`: same namespace + `View` swap + `recordActions()`.
+- [x] `DocumentApprovalResource`: `ViewAction` namespace + `recordActions()`.
+- [x] `ViewDocumentApproval`: deprecated `Placeholder` swapped for `View` with `viewData()`; preview render wrapped in `resources/views/admin/documentapproval/preview.blade.php`.
+- [x] Holder views (`workflowdesigner/holder`, `documenttimeline/holder`) updated to receive `$record` from the schema container.
+- [x] `AppPanelProvider`: stripped dangling imports (`Register`, legacy `Dashboard`, `AcademicContextWidget`).
+- [x] `UserForm`: removed `App\Models\Program` import + `program_id` select + `Registrar`/`Faculty` role gate.
+- [x] Verified `php artisan optimize:clear` and `php artisan route:list` boot cleanly — all 54 routes resolve.
+
+## Next Steps (Phase 3 — Dynamic metadata)
+
+- Add `documents.metadata` JSON column.
+- Add `document_type_fields` table + model.
+- Add Filament relation manager on `DocumentTypeResource` for defining per-type fields.
+- Render the dynamic fields on the admin `DocumentResource` create form and persist into `metadata`.
+- Display `metadata` read-only on the approval view.

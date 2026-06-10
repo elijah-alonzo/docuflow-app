@@ -7,15 +7,15 @@ use App\Filament\Admin\Resources\WorkflowResource\Pages\CreateWorkflow;
 use App\Filament\Admin\Resources\WorkflowResource\Pages\EditWorkflow;
 use App\Filament\Admin\Resources\WorkflowResource\Pages\ListWorkflows;
 use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Placeholder;
-use Filament\Schemas\Components\Textarea;
-use Filament\Schemas\Components\TextInput;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
 use UnitEnum;
 
 class WorkflowResource extends Resource
@@ -40,10 +40,8 @@ class WorkflowResource extends Resource
                 Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Placeholder::make('designer')
-                    ->label('')
-                    ->visible(fn ($record) => $record !== null)
-                    ->content(fn ($record) => $record ? view('admin.workflowdesigner.holder', ['workflow' => $record]) : null)
+                View::make('admin.workflowdesigner.holder')
+                    ->visible(fn ($record): bool => $record !== null)
                     ->columnSpanFull(),
             ]);
     }
@@ -68,7 +66,7 @@ class WorkflowResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ]);

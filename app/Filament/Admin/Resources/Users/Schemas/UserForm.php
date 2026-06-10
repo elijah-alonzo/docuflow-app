@@ -70,7 +70,9 @@ class UserForm
                                 ->pluck('name', 'name')
                                 ->all())
                             ->prefixIcon('heroicon-m-shield-check')
+                            ->required()
                             ->default(fn (): ?string => Role::query()->where('name', '!=', 'Admin')->orderBy('name')->value('name'))
+                            ->live()
                             ->afterStateHydrated(function ($set, $record): void {
                                 $role = $record?->roles?->pluck('name')->first();
 

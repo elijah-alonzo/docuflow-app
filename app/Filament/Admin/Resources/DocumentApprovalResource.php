@@ -6,13 +6,12 @@ use App\Models\Document;
 use App\Filament\Admin\Resources\DocumentApprovalResource\Pages\ListDocumentApprovals;
 use App\Filament\Admin\Resources\DocumentApprovalResource\Pages\ViewDocumentApproval;
 use BackedEnum;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Tables\Actions\ViewAction;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use UnitEnum;
 
 class DocumentApprovalResource extends Resource
@@ -90,7 +89,7 @@ class DocumentApprovalResource extends Resource
                     ->sortable(),
             ])
             ->filters([])
-            ->actions([
+            ->recordActions([
                 ViewAction::make(),
             ]);
     }

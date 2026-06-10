@@ -8,17 +8,17 @@ use App\Filament\Admin\Resources\DocumentTypeResource\Pages\CreateDocumentType;
 use App\Filament\Admin\Resources\DocumentTypeResource\Pages\EditDocumentType;
 use App\Filament\Admin\Resources\DocumentTypeResource\Pages\ListDocumentTypes;
 use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Select;
-use Filament\Schemas\Components\Textarea;
-use Filament\Schemas\Components\TextInput;
-use Filament\Schemas\Components\Toggle;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
 use UnitEnum;
 
 class DocumentTypeResource extends Resource
@@ -74,7 +74,7 @@ class DocumentTypeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ]);

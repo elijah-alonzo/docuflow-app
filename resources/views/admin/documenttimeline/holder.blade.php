@@ -1,3 +1,3 @@
 <div>
-    @include('admin.documenttimeline.page', ['document' => $document])
+    @include('admin.documenttimeline.page', ['document' => $record])
 </div>

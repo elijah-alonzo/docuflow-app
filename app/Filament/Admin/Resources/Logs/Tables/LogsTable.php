@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Admin\Resources\SystemLogs\Tables;
+namespace App\Filament\Admin\Resources\Logs\Tables;
 
 use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class SystemLogsTable
+class LogsTable
 {
     public static function configure(Table $table): Table
     {

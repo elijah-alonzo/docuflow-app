@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentApprovalResource\Pages;
+namespace App\Filament\Admin\Resources\Approvals\Pages;
 
-use App\Filament\Admin\Resources\DocumentApprovalResource;
-use App\Models\Document;
-use App\Services\WorkflowEngine;
+use App\Filament\Admin\Resources\Approvals\DocumentApprovalResource;
+use App\Features\Documents\Models\Document;
+use App\Features\Workflows\Services\WorkflowEngine;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Pages\ViewRecord;

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentResource\Pages;
+namespace App\Filament\Admin\Resources\Documents\Pages;
 
-use App\Filament\Admin\Resources\DocumentResource;
-use App\Models\DocumentType;
-use App\Features\Workflow\Models\WorkflowStep;
+use App\Filament\Admin\Resources\Documents\DocumentsResource;
+use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\Workflows\Models\WorkflowStep;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateDocument extends CreateRecord
 {
-    protected static string $resource = DocumentResource::class;
+    protected static string $resource = DocumentsResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

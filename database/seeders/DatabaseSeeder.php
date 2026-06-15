@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Features\Users\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Features\Roles\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder

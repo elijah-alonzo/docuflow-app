@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Admin\Resources\Approvals;
 
-use App\Models\Document;
-use App\Filament\Admin\Resources\DocumentApprovalResource\Pages\ListDocumentApprovals;
-use App\Filament\Admin\Resources\DocumentApprovalResource\Pages\ViewDocumentApproval;
+use App\Features\Documents\Models\Document;
+use App\Filament\Admin\Resources\Approvals\Pages\ListDocumentApprovals;
+use App\Filament\Admin\Resources\Approvals\Pages\ViewDocumentApproval;
 use BackedEnum;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;

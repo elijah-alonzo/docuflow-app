@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Admin\Resources\SystemLogs;
+namespace App\Filament\Admin\Resources\Logs;
 
-use App\Filament\Admin\Resources\SystemLogs\Pages\ListSystemLogs;
-use App\Filament\Admin\Resources\SystemLogs\Tables\SystemLogsTable;
-use App\Models\SystemLog;
+use App\Filament\Admin\Resources\Logs\Pages\ListLogs;
+use App\Filament\Admin\Resources\Logs\Tables\LogsTable;
+use App\Features\Logs\Models\Log;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class SystemLogsResource extends Resource
+class LogsResource extends Resource
 {
-    protected static ?string $model = SystemLog::class;
+    protected static ?string $model = Log::class;
 
     protected static UnitEnum|string|null $navigationGroup = 'System Settings';
 
@@ -40,13 +40,13 @@ class SystemLogsResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return SystemLogsTable::configure($table);
+        return LogsTable::configure($table);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListSystemLogs::route('/'),
+            'index' => ListLogs::route('/'),
         ];
     }
 }

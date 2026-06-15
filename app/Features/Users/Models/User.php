@@ -21,6 +21,11 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasRoles, Notifiable;
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserFactory::new();
+    }
+
     public function getFullNameAttribute(): string
     {
         $middleInitial = $this->middle_initial

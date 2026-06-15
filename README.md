@@ -307,12 +307,17 @@ Instead, business rules should be delegated to service classes.
 ### Services
 
 ```text
-app/Services/
+app/Features/
 
-├── WorkflowEngine.php
-├── WorkflowResolver.php
-├── ApprovalService.php
-└── DocumentStatusService.php
+├── Workflows/Services/
+│   ├── WorkflowEngine.php
+│   └── WorkflowResolver.php
+│
+├── Approvals/Services/
+│   └── ApprovalService.php
+│
+└── Documents/Services/
+    └── DocumentStatusService.php
 ```
 
 ---
@@ -386,59 +391,62 @@ Custom views should only be created when advanced interfaces are required.
 app/
 
 ├── Features/
+│   ├── Approvals/
+│   │   ├── Models/ (DocumentApproval.php)
+│   │   └── Services/ (ApprovalService.php)
+│   ├── DocumentTypeFields/
+│   │   └── Models/ (DocumentTypeField.php)
+│   ├── DocumentTypes/
+│   │   └── Models/ (DocumentType.php)
+│   ├── Documents/
+│   │   ├── Models/ (Document.php)
+│   │   └── Services/ (DocumentStatusService.php)
+│   ├── Logs/
+│   │   ├── Models/ (Log.php)
+│   │   └── Policies/ (LogPolicy.php)
+│   ├── Roles/
+│   │   ├── Models/ (Role.php)
+│   │   └── Policies/ (RolePolicy.php)
+│   ├── Submissions/
+│   ├── Users/
+│   │   ├── Models/ (User.php)
+│   │   └── Policies/ (UserPolicy.php)
+│   └── Workflows/
+│       ├── Models/ (Workflow.php, WorkflowStep.php)
+│       ├── Services/ (WorkflowEngine.php, WorkflowResolver.php)
+│       ├── Livewire/ (WorkflowDesigner.php)
+│       └── Tests/ (WorkflowTest.php)
 │
-│   └── Workflow/
-│
-│       ├── Models/
-│       │   ├── Workflow.php
-│       │   └── WorkflowStep.php
-│       │
-│       ├── Actions/
-│       │   ├── CreateWorkflow.php
-│       │   ├── UpdateWorkflow.php
-│       │   └── DeleteWorkflow.php
-│       │
-│       ├── Services/
-│       │   └── WorkflowEngine.php
-│       │
-│       ├── Policies/
-│       │   └── WorkflowPolicy.php
-│       │
-│       ├── Livewire/
-│       │   └── WorkflowDesigner.php
-│       │
-│       ├── Views/
-│       │   └── workflowdesigner/
-│       │       ├── page.blade.php
-│       │       ├── styles.blade.php
-│       │       └── scripts.blade.php
-│       │
-│       ├── Tests/
-│       │   ├── Feature/
-│       │   └── Unit/
-│       │
-│       └── WorkflowServiceProvider.php
-│
-├── Filament/
-│
-│   └── Resources/
-│
-│       └── WorkflowResource/
-│           ├── WorkflowResource.php
-│           │
-│           ├── Pages/
-│           │   ├── ListWorkflows.php
-│           │   ├── CreateWorkflow.php
-│           │   └── EditWorkflow.php
-│           │
-│           ├── Schemas/
-│           │   └── WorkflowForm.php
-│           │
-│           ├── Tables/
-│           │   └── WorkflowTable.php
-│           │
-│           ├── Widgets/
-│           └── Relations/
+└── Filament/
+    └── Admin/
+        ├── Pages/
+        ├── Resources/
+        │   ├── Approvals/
+        │   │   ├── DocumentApprovalResource.php
+        │   │   └── Pages/ (ListDocumentApprovals.php, ViewDocumentApproval.php)
+        │   ├── DocumentTypes/
+        │   │   ├── DocumentType.php
+        │   │   └── Pages/
+        │   ├── Documents/
+        │   │   ├── DocumentsResource.php
+        │   │   └── Pages/ (ListDocuments.php, CreateDocument.php, EditDocument.php)
+        │   ├── Logs/
+        │   │   ├── LogsResource.php
+        │   │   ├── Pages/ (ListLogs.php)
+        │   │   └── Tables/ (LogsTable.php)
+        │   ├── Roles/
+        │   │   ├── RoleResource.php
+        │   │   └── Pages/
+        │   ├── Users/
+        │   │   ├── UserResource.php
+        │   │   ├── Schemas/ (UserForm.php)
+        │   │   ├── Tables/ (UsersTable.php)
+        │   │   └── Pages/
+        │   └── Workflows/
+        │       ├── WorkflowsResource.php
+        │       └── Pages/
+        └── Widgets/
+```
 ```
 
 # Benefits

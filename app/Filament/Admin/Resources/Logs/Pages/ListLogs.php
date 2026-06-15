@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filament\Admin\Resources\SystemLogs\Pages;
+namespace App\Filament\Admin\Resources\Logs\Pages;
 
-use App\Filament\Admin\Resources\SystemLogs\SystemLogsResource;
+use App\Filament\Admin\Resources\Logs\LogsResource;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSystemLogs extends ListRecords
+class ListLogs extends ListRecords
 {
-    protected static string $resource = SystemLogsResource::class;
+    protected static string $resource = LogsResource::class;
 
     protected function getHeaderActions(): array
     {

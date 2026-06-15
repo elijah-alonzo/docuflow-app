@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'ip_address',
     'user_agent',
 ])]
-class SystemLog extends Model
+class Log extends Model
 {
     use Prunable;
 

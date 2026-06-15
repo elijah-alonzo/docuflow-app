@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Features\Logs\Models\SystemLog;
+use App\Features\Logs\Models\Log;
 use App\Features\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -136,13 +136,13 @@ class ModelActionObserver
 
     private function writeLog(string $action, Model $model, ?string $description, ?array $changes): void
     {
-        if ($model instanceof SystemLog || app()->runningInConsole()) {
+        if ($model instanceof Log || app()->runningInConsole()) {
             return;
         }
 
         $request = request();
 
-        SystemLog::create([
+        Log::create([
             'user_id' => Auth::id(),
             'action' => $action,
             'model_type' => $model->getMorphClass(),

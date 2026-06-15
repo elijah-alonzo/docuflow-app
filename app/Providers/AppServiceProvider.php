@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Features\Users\Models\User;
-use App\Observers\ModelActionObserver;
+use App\Features\Logs\Observers\ModelActionObserver;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 

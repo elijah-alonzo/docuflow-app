@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace App\Features\Logs\Observers;
 
 use App\Features\Logs\Models\Log;
 use App\Features\Users\Models\User;

@@ -40,7 +40,7 @@ class WorkflowsResource extends Resource
                 Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                View::make('admin.workflow_designer.holder')
+                View::make('Admin.WorkflowDesigner.holder')
                     ->visible(fn ($record): bool => $record !== null)
                     ->columnSpanFull(),
             ]);

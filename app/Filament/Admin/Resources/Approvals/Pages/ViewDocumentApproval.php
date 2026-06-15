@@ -78,13 +78,13 @@ class ViewDocumentApproval extends ViewRecord
         return $schema
             ->columns(3)
             ->components([
-                View::make('admin.documentapproval.preview')
+                View::make('admin.document_approval.preview')
                     ->columnSpan(2)
                     ->viewData(fn (Document $record): array => [
                         'previewHtml' => $this->renderPreview($record),
                     ]),
 
-                View::make('admin.documenttimeline.holder')
+                View::make('Admin.DocumentTimeline.holder')
                     ->columnSpan(1),
 
                 Section::make('Document Metadata')

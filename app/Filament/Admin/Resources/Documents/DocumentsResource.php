@@ -91,7 +91,7 @@ class DocumentsResource extends Resource
                     })
                     ->columns(2)
                     ->columnSpanFull(),
-                View::make('admin.documenttimeline.holder')
+                View::make('Admin.DocumentTimeline.holder')
                     ->visible(fn ($record): bool => $record !== null)
                     ->columnSpanFull(),
             ]);

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('document_type_id')->constrained('document_types')->restrictOnDelete();
             $table->foreignId('workflow_id')->constrained('workflows')->restrictOnDelete();
             $table->string('title');
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->foreignId('submitted_by')->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('pending');
             $table->foreignId('current_step_id')->nullable()->constrained('workflow_steps')->nullOnDelete();

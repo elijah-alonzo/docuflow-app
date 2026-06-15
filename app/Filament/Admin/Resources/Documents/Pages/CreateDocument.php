@@ -18,14 +18,20 @@ class CreateDocument extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['submitted_by'] = auth()->id();
+        if (empty($data['submitted_by'])) {
+            $data['submitted_by'] = auth()->id();
+        }
         $data['status'] = 'pending';
 
-        $documentType = DocumentType::find($data['document_type_id']);
-        if ($documentType && $documentType->workflow_id) {
-            $data['workflow_id'] = $documentType->workflow_id;
+        if (empty($data['workflow_id'])) {
+            $documentType = DocumentType::find($data['document_type_id']);
+            if ($documentType && $documentType->workflow_id) {
+                $data['workflow_id'] = $documentType->workflow_id;
+            }
+        }
 
-            $firstStep = WorkflowStep::where('workflow_id', $documentType->workflow_id)
+        if (!empty($data['workflow_id'])) {
+            $firstStep = WorkflowStep::where('workflow_id', $data['workflow_id'])
                 ->orderBy('step_order', 'asc')
                 ->first();
 

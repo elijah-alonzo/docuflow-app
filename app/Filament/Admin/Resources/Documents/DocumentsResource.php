@@ -4,6 +4,8 @@ namespace App\Filament\Admin\Resources\Documents;
 
 use App\Features\Documents\Models\Document;
 use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\Users\Models\User;
+use App\Features\Workflows\Models\Workflow;
 use App\Filament\Admin\Resources\Documents\Pages\CreateDocument;
 use App\Filament\Admin\Resources\Documents\Pages\EditDocument;
 use App\Filament\Admin\Resources\Documents\Pages\ListDocuments;
@@ -34,7 +36,7 @@ class DocumentsResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Document Management';
 
-    protected static ?string $navigationLabel = 'Document Submissions';
+    protected static ?string $navigationLabel = 'All Submissions';
 
     protected static ?int $navigationSort = 10;
 
@@ -42,8 +44,8 @@ class DocumentsResource extends Resource
     {
         return $schema
             ->components([
-                Section::make('Document Submission')
-                    ->description('Submit a document for routing and approval.')
+                Section::make('New Document Submission')
+                    ->description('Initiate a document submission, select the workflow, and assign an uploader.')
                     ->schema([
                         TextInput::make('title')
                             ->required()
@@ -54,10 +56,32 @@ class DocumentsResource extends Resource
                             ->options(fn () => DocumentType::where('is_active', true)->pluck('name', 'id'))
                             ->required()
                             ->live()
-                            ->prefixIcon('heroicon-o-document-duplicate'),
+                            ->prefixIcon('heroicon-o-document-duplicate')
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                if ($state) {
+                                    $documentType = DocumentType::find($state);
+                                    if ($documentType && $documentType->workflow_id) {
+                                        $set('workflow_id', $documentType->workflow_id);
+                                    }
+                                }
+                            }),
+                        Select::make('workflow_id')
+                            ->label('Workflow Template')
+                            ->relationship('workflow', 'name')
+                            ->required()
+                            ->live()
+                            ->preload()
+                            ->prefixIcon('heroicon-o-arrow-path-rounded-square'),
+                        Select::make('submitted_by')
+                            ->label('Assigned Uploader')
+                            ->relationship('submittedBy')
+                            ->getOptionLabelFromRecordUsing(fn (User $record) => $record->full_name)
+                            ->required()
+                            ->searchable()
+                            ->preload()
+                            ->prefixIcon('heroicon-o-user'),
                         FileUpload::make('file_path')
                             ->label('Document File')
-                            ->required()
                             ->disk('public')
                             ->directory('documents')
                             ->columnSpanFull(),
@@ -120,7 +144,7 @@ class DocumentsResource extends Resource
                     ->badge()
                     ->color('primary'),
                 TextColumn::make('submittedBy.full_name')
-                    ->label('Submitted By')
+                    ->label('Assigned Uploader')
                     ->sortable(),
                 TextColumn::make('status')
                     ->badge()
@@ -136,7 +160,7 @@ class DocumentsResource extends Resource
                     ->badge()
                     ->color(fn ($state) => $state ? 'info' : 'success'),
                 TextColumn::make('created_at')
-                    ->label('Date Submitted')
+                    ->label('Date Initiated')
                     ->dateTime()
                     ->sortable(),
             ])

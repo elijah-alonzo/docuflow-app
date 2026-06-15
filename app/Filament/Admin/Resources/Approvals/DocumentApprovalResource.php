@@ -23,7 +23,7 @@ class DocumentApprovalResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Document Management';
 
-    protected static ?string $navigationLabel = 'Document Approvals';
+    protected static ?string $navigationLabel = 'Approval Inbox';
 
     protected static ?int $navigationSort = 11;
 
@@ -58,7 +58,7 @@ class DocumentApprovalResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Document Approvals Inbox')
+            ->heading('Approval Inbox')
             ->description('Review and act on documents routed to your role for approval.')
             ->columns([
                 TextColumn::make('title')

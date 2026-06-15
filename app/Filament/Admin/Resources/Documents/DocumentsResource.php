@@ -10,10 +10,14 @@ use App\Filament\Admin\Resources\Documents\Pages\ListDocuments;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
@@ -42,12 +46,51 @@ class DocumentsResource extends Resource
                 Select::make('document_type_id')
                     ->label('Document Type')
                     ->options(fn () => DocumentType::where('is_active', true)->pluck('name', 'id'))
-                    ->required(),
+                    ->required()
+                    ->live(),
                 FileUpload::make('file_path')
                     ->label('Document File')
                     ->required()
                     ->disk('public')
                     ->directory('documents'),
+                Grid::make()
+                    ->schema(function (callable $get) {
+                        $documentTypeId = $get('document_type_id');
+                        if (!$documentTypeId) {
+                            return [];
+                        }
+
+                        $documentType = DocumentType::find($documentTypeId);
+                        if (!$documentType) {
+                            return [];
+                        }
+
+                        $fields = $documentType->fields;
+                        $components = [];
+
+                        foreach ($fields as $field) {
+                            $component = match ($field->type) {
+                                'textarea' => Textarea::make("metadata.{$field->field_key}"),
+                                'number' => TextInput::make("metadata.{$field->field_key}")->numeric(),
+                                'date' => DatePicker::make("metadata.{$field->field_key}"),
+                                'select' => Select::make("metadata.{$field->field_key}")
+                                    ->options($field->options ?? []),
+                                'checkbox' => Toggle::make("metadata.{$field->field_key}"),
+                                default => TextInput::make("metadata.{$field->field_key}"),
+                            };
+
+                            $component
+                                ->label($field->label)
+                                ->helperText($field->help_text)
+                                ->required($field->is_required);
+
+                            $components[] = $component;
+                        }
+
+                        return $components;
+                    })
+                    ->columns(2)
+                    ->columnSpanFull(),
                 View::make('admin.documenttimeline.holder')
                     ->visible(fn ($record): bool => $record !== null)
                     ->columnSpanFull(),

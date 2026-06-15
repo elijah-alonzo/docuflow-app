@@ -25,5 +25,10 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         User::observe(ModelActionObserver::class);
+
+        if (function_exists('view')) {
+            view()->addLocation(app_path('Features/Workflows/Views'));
+            view()->addLocation(app_path('Features/Approvals/Views'));
+        }
     }
 }

@@ -139,6 +139,6 @@ class WorkflowDesigner extends Component
 
     public function render()
     {
-        return view('admin.workflowdesigner.page');
+        return view('admin.workflow_designer.page');
     }
 }

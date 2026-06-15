@@ -6,8 +6,13 @@ use App\Filament\Admin\Resources\Approvals\DocumentApprovalResource;
 use App\Features\Documents\Models\Document;
 use App\Features\Workflows\Services\WorkflowEngine;
 use Filament\Actions\Action;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -81,6 +86,41 @@ class ViewDocumentApproval extends ViewRecord
 
                 View::make('admin.documenttimeline.holder')
                     ->columnSpan(1),
+
+                Section::make('Document Metadata')
+                    ->schema(function (Document $record) {
+                        $documentType = $record->documentType;
+                        if (!$documentType) {
+                            return [];
+                        }
+
+                        $fields = $documentType->fields;
+                        $components = [];
+
+                        foreach ($fields as $field) {
+                            $component = match ($field->type) {
+                                'textarea' => Textarea::make("metadata.{$field->field_key}"),
+                                'number' => TextInput::make("metadata.{$field->field_key}")->numeric(),
+                                'date' => DatePicker::make("metadata.{$field->field_key}"),
+                                'select' => Select::make("metadata.{$field->field_key}")
+                                    ->options($field->options ?? []),
+                                'checkbox' => Toggle::make("metadata.{$field->field_key}"),
+                                default => TextInput::make("metadata.{$field->field_key}"),
+                            };
+
+                            $component
+                                ->label($field->label)
+                                ->helperText($field->help_text)
+                                ->disabled();
+
+                            $components[] = $component;
+                        }
+
+                        return $components;
+                    })
+                    ->columns(2)
+                    ->columnSpan(2)
+                    ->visible(fn (Document $record) => $record->documentType && $record->documentType->fields()->exists()),
             ]);
     }
 

@@ -487,3 +487,30 @@ Future workflow requirements can be implemented through configuration rather tha
 ## Extensible
 
 Additional workflow features such as notifications, escalations, deadlines, digital signatures, and automated approvals can be integrated without redesigning the core architecture.
+
+---
+
+# Developer / AI Agent Instructions
+
+> [!IMPORTANT]
+> **CRITICAL: READ BEFORE PERFORMING ANY ACTIONS TO PRESERVE TOKENS AND BUDGET**
+> To avoid wasting tokens on redundant file system scans, git checks, or command executions, follow these constraints:
+>
+> 1. **Do NOT run Git status / Git log commands** unless explicitly requested by the user.
+> 2. **Current Database & Models State (Phase 3):**
+>    - The database migrations for workflows, document types, documents, approvals, and `document_type_fields` have already been created and migrated.
+>    - The Eloquent models (`Document`, `DocumentType`, `DocumentTypeField`, `Workflow`, `WorkflowStep`, `DocumentApproval`) are fully implemented and mapped.
+>    - The Spatie Roles schema contains a `description` column.
+> 3. **Current View State:**
+>    - The custom blade files (like `admin.workflowdesigner.holder`, `admin.documenttimeline.holder`, `admin.documentapproval.preview`) do NOT exist yet in `resources/views`. They must be created.
+> 4. **Testing Suite:**
+>    - Testing packages (`phpunit`, `pest`) are not configured in composer.json/composer.lock dev dependencies. Do not attempt to run test commands unless you install them first via composer or are asked to.
+> 5. **Core Objective for Phase 3 Implementation:**
+>    - Modify `DocumentsResource.php` to make the `document_type_id` Select field reactive (`->live()`), load the `DocumentTypeField` fields dynamically, and persist them into the `metadata` JSON column.
+>    - Update `ViewDocumentApproval.php` to display these metadata values as read-only.
+>    - Create the missing placeholder/premium-styled Blade views to enable compilation and page loads.
+
+File naming convention
+- directories: PascalCase
+- blade views: standard.blade.php, page.blade.php, styles.blade.php, scripts.blade.php
+

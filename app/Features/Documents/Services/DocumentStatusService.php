@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Documents\Services;
 
-use App\Models\Document;
+use App\Features\Documents\Models\Document;
 
 class DocumentStatusService
 {

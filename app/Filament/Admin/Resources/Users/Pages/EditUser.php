@@ -6,7 +6,7 @@ use App\Filament\Admin\Resources\Users\UserResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Role;
+use App\Features\Roles\Models\Role;
 
 class EditUser extends EditRecord
 {

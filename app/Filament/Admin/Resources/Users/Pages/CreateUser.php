@@ -3,10 +3,10 @@
 namespace App\Filament\Admin\Resources\Users\Pages;
 
 use App\Filament\Admin\Resources\Users\UserResource;
-use App\Models\User;
+use App\Features\Users\Models\User;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Role;
+use App\Features\Roles\Models\Role;
 
 class CreateUser extends CreateRecord
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Workflows\Services;
 
-use App\Models\DocumentType;
-use App\Features\Workflow\Models\Workflow;
+use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\Workflows\Models\Workflow;
 
 class WorkflowResolver
 {

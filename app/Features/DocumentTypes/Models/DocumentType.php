@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Features\DocumentTypes\Models;
 
-use App\Features\Workflow\Models\Workflow;
+use App\Features\Workflows\Models\Workflow;
+use App\Features\Documents\Models\Document;
+use App\Features\DocumentTypeFields\Models\DocumentTypeField;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

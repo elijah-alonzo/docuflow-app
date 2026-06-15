@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Users\Tables;
 
-use App\Models\User;
+use App\Features\Users\Models\User;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;

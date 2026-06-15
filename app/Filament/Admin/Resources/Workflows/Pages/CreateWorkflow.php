@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Admin\Resources\WorkflowResource\Pages;
+namespace App\Filament\Admin\Resources\Workflows\Pages;
 
-use App\Filament\Admin\Resources\WorkflowResource;
+use App\Filament\Admin\Resources\Workflows\WorkflowsResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateWorkflow extends CreateRecord
 {
-    protected static string $resource = WorkflowResource::class;
+    protected static string $resource = WorkflowsResource::class;
 }

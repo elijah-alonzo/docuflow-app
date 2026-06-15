@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Admin\Resources\DocumentTypes;
 
-use App\Filament\Admin\Resources\DocumentTypeResource\Pages\CreateDocumentType;
-use App\Filament\Admin\Resources\DocumentTypeResource\Pages\EditDocumentType;
-use App\Filament\Admin\Resources\DocumentTypeResource\Pages\ListDocumentTypes;
-use App\Filament\Admin\Resources\DocumentTypeResource\RelationManagers\FieldsRelationManager;
-use App\Models\DocumentType;
+use App\Filament\Admin\Resources\DocumentTypes\Pages\CreateDocumentType;
+use App\Filament\Admin\Resources\DocumentTypes\Pages\EditDocumentType;
+use App\Filament\Admin\Resources\DocumentTypes\Pages\ListDocumentTypes;
+use App\Filament\Admin\Resources\DocumentTypes\Relations\RelationManager as FieldsRelationManager;
+use App\Features\DocumentTypes\Models\DocumentType as DocumentTypeModel;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -21,9 +21,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class DocumentTypeResource extends Resource
+class DocumentType extends Resource
 {
-    protected static ?string $model = DocumentType::class;
+    protected static ?string $model = DocumentTypeModel::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-duplicate';
 

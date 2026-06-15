@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Admin\Resources\Workflows;
 
-use App\Features\Workflow\Models\Workflow;
-use App\Filament\Admin\Resources\WorkflowResource\Pages\CreateWorkflow;
-use App\Filament\Admin\Resources\WorkflowResource\Pages\EditWorkflow;
-use App\Filament\Admin\Resources\WorkflowResource\Pages\ListWorkflows;
+use App\Features\Workflows\Models\Workflow;
+use App\Filament\Admin\Resources\Workflows\Pages\CreateWorkflow;
+use App\Filament\Admin\Resources\Workflows\Pages\EditWorkflow;
+use App\Filament\Admin\Resources\Workflows\Pages\ListWorkflows;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -18,7 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class WorkflowResource extends Resource
+class WorkflowsResource extends Resource
 {
     protected static ?string $model = Workflow::class;
 

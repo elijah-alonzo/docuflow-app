@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Features\Logs\Models;
 
+use App\Features\Users\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

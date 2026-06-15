@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Features\Workflow\Livewire;
+namespace App\Features\Workflows\Livewire;
 
-use App\Features\Workflow\Models\Workflow;
-use App\Features\Workflow\Models\WorkflowStep;
-use App\Models\Role;
+use App\Features\Workflows\Models\Workflow;
+use App\Features\Workflows\Models\WorkflowStep;
+use App\Features\Roles\Models\Role;
 use Livewire\Component;
 
 class WorkflowDesigner extends Component

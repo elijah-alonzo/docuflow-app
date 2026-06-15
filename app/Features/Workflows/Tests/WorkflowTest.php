@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace App\Features\Workflows\Tests;
 
-use App\Features\Workflow\Models\Workflow;
-use App\Features\Workflow\Models\WorkflowStep;
-use App\Models\Document;
-use App\Models\DocumentType;
-use App\Models\Role;
-use App\Models\User;
-use App\Services\WorkflowEngine;
+use App\Features\Workflows\Models\Workflow;
+use App\Features\Workflows\Models\WorkflowStep;
+use App\Features\Documents\Models\Document;
+use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\Roles\Models\Role;
+use App\Features\Users\Models\User;
+use App\Features\Workflows\Services\WorkflowEngine;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

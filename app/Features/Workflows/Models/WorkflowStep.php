@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Features\Workflow\Models;
+namespace App\Features\Workflows\Models;
 
-use App\Models\Role;
+use App\Features\Roles\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

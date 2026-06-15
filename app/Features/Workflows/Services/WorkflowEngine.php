@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Workflows\Services;
 
-use App\Models\Document;
-use App\Models\User;
-use App\Models\Role;
-use App\Features\Workflow\Models\WorkflowStep;
+use App\Features\Documents\Models\Document;
+use App\Features\Users\Models\User;
+use App\Features\Roles\Models\Role;
+use App\Features\Workflows\Models\WorkflowStep;
+use App\Features\Approvals\Services\ApprovalService;
+use App\Features\Documents\Services\DocumentStatusService;
 
 class WorkflowEngine
 {

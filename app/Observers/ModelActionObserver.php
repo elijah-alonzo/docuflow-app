@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\SystemLog;
-use App\Models\User;
+use App\Features\Logs\Models\SystemLog;
+use App\Features\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 

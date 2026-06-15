@@ -8,7 +8,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\Permission\Models\Role;
+use App\Features\Roles\Models\Role;
 
 class ListUsers extends ListRecords
 {

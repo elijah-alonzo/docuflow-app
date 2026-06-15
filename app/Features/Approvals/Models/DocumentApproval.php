@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Features\Approvals\Models;
 
-use App\Features\Workflow\Models\WorkflowStep;
+use App\Features\Workflows\Models\WorkflowStep;
+use App\Features\Documents\Models\Document;
+use App\Features\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

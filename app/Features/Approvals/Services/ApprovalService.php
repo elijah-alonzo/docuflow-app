@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Features\Approvals\Services;
 
-use App\Models\Document;
-use App\Models\User;
-use App\Features\Workflow\Models\WorkflowStep;
-use App\Models\DocumentApproval;
+use App\Features\Documents\Models\Document;
+use App\Features\Users\Models\User;
+use App\Features\Workflows\Models\WorkflowStep;
+use App\Features\Approvals\Models\DocumentApproval;
 
 class ApprovalService
 {

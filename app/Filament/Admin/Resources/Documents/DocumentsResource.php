@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Admin\Resources\Documents;
 
-use App\Models\Document;
-use App\Models\DocumentType;
-use App\Filament\Admin\Resources\DocumentResource\Pages\CreateDocument;
-use App\Filament\Admin\Resources\DocumentResource\Pages\EditDocument;
-use App\Filament\Admin\Resources\DocumentResource\Pages\ListDocuments;
+use App\Features\Documents\Models\Document;
+use App\Features\DocumentTypes\Models\DocumentType;
+use App\Filament\Admin\Resources\Documents\Pages\CreateDocument;
+use App\Filament\Admin\Resources\Documents\Pages\EditDocument;
+use App\Filament\Admin\Resources\Documents\Pages\ListDocuments;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -20,7 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class DocumentResource extends Resource
+class DocumentsResource extends Resource
 {
     protected static ?string $model = Document::class;
 

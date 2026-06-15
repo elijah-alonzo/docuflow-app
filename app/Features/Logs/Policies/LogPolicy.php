@@ -2,72 +2,72 @@
 
 declare(strict_types=1);
 
-namespace App\Policies;
+namespace App\Features\Logs\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
-use App\Models\SystemLog;
+use App\Features\Users\Models\User;
+use App\Features\Logs\Models\SystemLog;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SystemLogPolicy
+class LogPolicy
 {
     use HandlesAuthorization;
     
-    public function viewAny(AuthUser $authUser): bool
+    public function viewAny(User $authUser): bool
     {
         return $authUser->can('ViewAny:SystemLog');
     }
 
-    public function view(AuthUser $authUser, SystemLog $systemLog): bool
+    public function view(User $authUser, SystemLog $systemLog): bool
     {
         return $authUser->can('View:SystemLog');
     }
 
-    public function create(AuthUser $authUser): bool
+    public function create(User $authUser): bool
     {
         return $authUser->can('Create:SystemLog');
     }
 
-    public function update(AuthUser $authUser, SystemLog $systemLog): bool
+    public function update(User $authUser, SystemLog $systemLog): bool
     {
         return $authUser->can('Update:SystemLog');
     }
 
-    public function delete(AuthUser $authUser, SystemLog $systemLog): bool
+    public function delete(User $authUser, SystemLog $systemLog): bool
     {
         return $authUser->can('Delete:SystemLog');
     }
 
-    public function deleteAny(AuthUser $authUser): bool
+    public function deleteAny(User $authUser): bool
     {
         return $authUser->can('DeleteAny:SystemLog');
     }
 
-    public function restore(AuthUser $authUser, SystemLog $systemLog): bool
+    public function restore(User $authUser, SystemLog $systemLog): bool
     {
         return $authUser->can('Restore:SystemLog');
     }
 
-    public function forceDelete(AuthUser $authUser, SystemLog $systemLog): bool
+    public function forceDelete(User $authUser, SystemLog $systemLog): bool
     {
         return $authUser->can('ForceDelete:SystemLog');
     }
 
-    public function forceDeleteAny(AuthUser $authUser): bool
+    public function forceDeleteAny(User $authUser): bool
     {
         return $authUser->can('ForceDeleteAny:SystemLog');
     }
 
-    public function restoreAny(AuthUser $authUser): bool
+    public function restoreAny(User $authUser): bool
     {
         return $authUser->can('RestoreAny:SystemLog');
     }
 
-    public function replicate(AuthUser $authUser, SystemLog $systemLog): bool
+    public function replicate(User $authUser, SystemLog $systemLog): bool
     {
         return $authUser->can('Replicate:SystemLog');
     }
 
-    public function reorder(AuthUser $authUser): bool
+    public function reorder(User $authUser): bool
     {
         return $authUser->can('Reorder:SystemLog');
     }

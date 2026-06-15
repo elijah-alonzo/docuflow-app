@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Features\DocumentTypeFields\Models;
 
+use App\Features\DocumentTypes\Models\DocumentType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

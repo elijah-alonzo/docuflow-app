@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentTypeResource\RelationManagers;
+namespace App\Filament\Admin\Resources\DocumentTypes\Relations;
 
-use App\Models\DocumentTypeField;
+use App\Features\DocumentTypeFields\Models\DocumentTypeField;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -11,14 +11,14 @@ use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\RelationManagers\RelationManager as BaseRelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-class FieldsRelationManager extends RelationManager
+class RelationManager extends BaseRelationManager
 {
     protected static string $relationship = 'fields';
 

@@ -6,9 +6,10 @@ use App\Features\Documents\Models\Document;
 use App\Filament\Admin\Resources\Approvals\Pages\ListDocumentApprovals;
 use App\Filament\Admin\Resources\Approvals\Pages\ViewDocumentApproval;
 use BackedEnum;
-use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -89,8 +90,10 @@ class DocumentApprovalResource extends Resource
                     ->sortable(),
             ])
             ->filters([])
-            ->recordActions([
-                ViewAction::make(),
+            ->actions([
+                ActionGroup::make([
+                    ViewAction::make(),
+                ]),
             ]);
     }
 

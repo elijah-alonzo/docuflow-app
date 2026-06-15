@@ -12,13 +12,13 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use BezhanSalleh\FilamentShield\Traits\HasShieldFormComponents;
 use BezhanSalleh\PluginEssentials\Concerns\Resource as Essentials;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Grid;
@@ -66,11 +66,13 @@ class RoleResource extends Resource
                                         modifyRuleUsing: fn (Unique $rule): Unique => Utils::isTenancyEnabled() ? $rule->where(Utils::getTenantModelForeignKey(), Filament::getTenant()?->id) : $rule
                                     )
                                     ->required()
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->prefixIcon('heroicon-o-fingerprint'),
 
                                 TextInput::make('description')
                                     ->label('Description')
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->prefixIcon('heroicon-o-information-circle'),
 
                                 Hidden::make('guard_name')
                                     ->default(Utils::getFilamentAuthGuard()),
@@ -135,14 +137,11 @@ class RoleResource extends Resource
             ->filters([
                 //
             ])
-            ->recordActions([
+            ->actions([
                 ActionGroup::make([
                     EditAction::make(),
                     DeleteAction::make(),
-                ])
-                    ->iconButton()
-                    ->icon('heroicon-m-ellipsis-vertical')
-                    ->label('Actions'),
+                ]),
             ]);
     }
 

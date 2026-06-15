@@ -7,13 +7,15 @@ use App\Filament\Admin\Resources\Workflows\Pages\CreateWorkflow;
 use App\Filament\Admin\Resources\Workflows\Pages\EditWorkflow;
 use App\Filament\Admin\Resources\Workflows\Pages\ListWorkflows;
 use BackedEnum;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -34,12 +36,18 @@ class WorkflowsResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
+                Section::make('Workflow Details')
+                    ->description('Configure the main workflow settings.')
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->prefixIcon('heroicon-o-arrow-path-rounded-square'),
+                        Textarea::make('description')
+                            ->maxLength(65535)
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
                 View::make('Admin.WorkflowDesigner.holder')
                     ->visible(fn ($record): bool => $record !== null)
                     ->columnSpanFull(),
@@ -66,9 +74,11 @@ class WorkflowsResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([])
-            ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+            ->actions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ]);
     }
 

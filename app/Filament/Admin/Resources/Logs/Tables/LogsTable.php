@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Logs\Tables;
 
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -58,18 +59,20 @@ class LogsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
-            ->recordActions([
-                Action::make('view_changes')
-                    ->label('View Changes')
-                    ->icon('heroicon-m-eye')
-                    ->modalHeading('Changes')
-                    ->modalCancelActionLabel('Close')
-                    ->modalSubmitAction(false)
-                    ->modalContent(fn ($record) => view('app.system-logs.changes', [
-                        'record' => $record,
-                        'changes' => $record->changes,
-                    ]))
-                    ->action(fn () => null),
+            ->actions([
+                ActionGroup::make([
+                    Action::make('view_changes')
+                        ->label('View Changes')
+                        ->icon('heroicon-m-eye')
+                        ->modalHeading('Changes')
+                        ->modalCancelActionLabel('Close')
+                        ->modalSubmitAction(false)
+                        ->modalContent(fn ($record) => view('app.system-logs.changes', [
+                            'record' => $record,
+                            'changes' => $record->changes,
+                        ]))
+                        ->action(fn () => null),
+                ]),
             ])
             ->bulkActions([]);
     }

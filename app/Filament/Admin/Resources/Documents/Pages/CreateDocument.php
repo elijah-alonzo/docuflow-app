@@ -11,6 +11,11 @@ class CreateDocument extends CreateRecord
 {
     protected static string $resource = DocumentsResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return static::getResource()::getUrl('index');
+    }
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['submitted_by'] = auth()->id();

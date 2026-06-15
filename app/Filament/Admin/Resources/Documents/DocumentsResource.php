@@ -3,28 +3,14 @@
 namespace App\Filament\Admin\Resources\Documents;
 
 use App\Features\Documents\Models\Document;
-use App\Features\DocumentTypes\Models\DocumentType;
-use App\Features\Users\Models\User;
-use App\Features\Workflows\Models\Workflow;
 use App\Filament\Admin\Resources\Documents\Pages\CreateDocument;
 use App\Filament\Admin\Resources\Documents\Pages\EditDocument;
 use App\Filament\Admin\Resources\Documents\Pages\ListDocuments;
+use App\Filament\Admin\Resources\Documents\Schemas\DocumentForm;
+use App\Filament\Admin\Resources\Documents\Tables\DocumentsTable;
 use BackedEnum;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
@@ -42,135 +28,12 @@ class DocumentsResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make('New Document Submission')
-                    ->description('Initiate a document submission, select the workflow, and assign an uploader.')
-                    ->schema([
-                        TextInput::make('title')
-                            ->required()
-                            ->maxLength(255)
-                            ->prefixIcon('heroicon-o-pencil-square'),
-                        Select::make('document_type_id')
-                            ->label('Document Type')
-                            ->options(fn () => DocumentType::where('is_active', true)->pluck('name', 'id'))
-                            ->required()
-                            ->live()
-                            ->prefixIcon('heroicon-o-document-duplicate')
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                if ($state) {
-                                    $documentType = DocumentType::find($state);
-                                    if ($documentType && $documentType->workflow_id) {
-                                        $set('workflow_id', $documentType->workflow_id);
-                                    }
-                                }
-                            }),
-                        Select::make('workflow_id')
-                            ->label('Workflow Template')
-                            ->relationship('workflow', 'name')
-                            ->required()
-                            ->live()
-                            ->preload()
-                            ->prefixIcon('heroicon-o-arrow-path-rounded-square'),
-                        Select::make('submitted_by')
-                            ->label('Assigned Uploader')
-                            ->relationship('submittedBy')
-                            ->getOptionLabelFromRecordUsing(fn (User $record) => $record->full_name)
-                            ->required()
-                            ->searchable()
-                            ->preload()
-                            ->prefixIcon('heroicon-o-user'),
-                        FileUpload::make('file_path')
-                            ->label('Document File')
-                            ->disk('public')
-                            ->directory('documents')
-                            ->columnSpanFull(),
-                        Grid::make()
-                            ->schema(function (callable $get) {
-                                $documentTypeId = $get('document_type_id');
-                                if (!$documentTypeId) {
-                                    return [];
-                                }
-
-                                $documentType = DocumentType::find($documentTypeId);
-                                if (!$documentType) {
-                                    return [];
-                                }
-
-                                $fields = $documentType->fields;
-                                $components = [];
-
-                                foreach ($fields as $field) {
-                                    $component = match ($field->type) {
-                                        'textarea' => Textarea::make("metadata.{$field->field_key}"),
-                                        'number' => TextInput::make("metadata.{$field->field_key}")->numeric()->prefixIcon('heroicon-o-hashtag'),
-                                        'date' => DatePicker::make("metadata.{$field->field_key}")->prefixIcon('heroicon-o-calendar'),
-                                        'select' => Select::make("metadata.{$field->field_key}")
-                                            ->options($field->options ?? [])
-                                            ->prefixIcon('heroicon-o-list-bullet'),
-                                        'checkbox' => Toggle::make("metadata.{$field->field_key}"),
-                                        default => TextInput::make("metadata.{$field->field_key}")->prefixIcon('heroicon-o-tag'),
-                                    };
-
-                                    $component
-                                        ->label($field->label)
-                                        ->helperText($field->help_text)
-                                        ->required($field->is_required);
-
-                                    $components[] = $component;
-                                }
-
-                                return $components;
-                            })
-                            ->columns(2)
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(2),
-                View::make('Admin.DocumentTimeline.holder')
-                    ->visible(fn ($record): bool => $record !== null)
-                    ->columnSpanFull(),
-            ]);
+        return DocumentForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('title')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('documentType.name')
-                    ->label('Type')
-                    ->badge()
-                    ->color('primary'),
-                TextColumn::make('submittedBy.full_name')
-                    ->label('Assigned Uploader')
-                    ->sortable(),
-                TextColumn::make('status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'approved' => 'success',
-                        'rejected' => 'danger',
-                        'pending' => 'warning',
-                        default => 'gray',
-                    }),
-                TextColumn::make('currentStep.step_name')
-                    ->label('Current Stage')
-                    ->default('Completed')
-                    ->badge()
-                    ->color(fn ($state) => $state ? 'info' : 'success'),
-                TextColumn::make('created_at')
-                    ->label('Date Initiated')
-                    ->dateTime()
-                    ->sortable(),
-            ])
-            ->filters([])
-            ->actions([
-                ActionGroup::make([
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
-            ]);
+        return DocumentsTable::configure($table);
     }
 
     public static function getPages(): array

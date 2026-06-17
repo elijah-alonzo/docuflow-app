@@ -6,17 +6,11 @@ use App\Features\Workflows\Models\Workflow;
 use App\Filament\Admin\Resources\Workflows\Pages\CreateWorkflow;
 use App\Filament\Admin\Resources\Workflows\Pages\EditWorkflow;
 use App\Filament\Admin\Resources\Workflows\Pages\ListWorkflows;
+use App\Filament\Admin\Resources\Workflows\Schemas\WorkflowForm;
+use App\Filament\Admin\Resources\Workflows\Tables\WorkflowsTable;
 use BackedEnum;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
@@ -34,49 +28,12 @@ class WorkflowsResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make('Workflow Details')
-                    ->description('Configure the main workflow settings.')
-                    ->schema([
-                        TextInput::make('name')
-                            ->required()
-                            ->maxLength(255)
-                            ->prefixIcon('heroicon-o-arrow-path-rounded-square'),
-                        Textarea::make('description')
-                            ->maxLength(65535)
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(1),
-            ]);
+        return WorkflowForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('description')
-                    ->limit(50),
-                TextColumn::make('steps_count')
-                    ->label('Stages')
-                    ->counts('steps')
-                    ->badge()
-                    ->color('info'),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([])
-            ->actions([
-                ActionGroup::make([
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
-            ]);
+        return WorkflowsTable::configure($table);
     }
 
     public static function getPages(): array
@@ -88,10 +45,10 @@ class WorkflowsResource extends Resource
         ];
     }
 
-public static function getRelations(): array
-{
-    return [
-        RelationManagers\WorkflowStepsRelationManager::class,
-    ];
-}
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\WorkflowStepsRelationManager::class,
+        ];
+    }
 }

@@ -59,7 +59,7 @@ class DocumentType extends Resource
                             ->default(true)
                             ->required(),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
             ]);
     }
 

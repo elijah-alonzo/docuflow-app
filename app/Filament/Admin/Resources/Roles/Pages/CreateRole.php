@@ -31,6 +31,7 @@ class CreateRole extends CreateRecord
             ->filter(fn (mixed $permission, string $key): bool => ! in_array($key, ['name', 'guard_name', 'select_all', Utils::getTenantModelForeignKey()], true))
             ->values()
             ->flatten()
+            ->filter() // <-- drops null/false/empty values
             ->unique();
 
         if (Utils::isTenancyEnabled() && Arr::has($data, Utils::getTenantModelForeignKey()) && filled($data[Utils::getTenantModelForeignKey()])) {

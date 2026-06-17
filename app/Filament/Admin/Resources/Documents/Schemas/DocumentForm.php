@@ -99,7 +99,7 @@ class DocumentForm
 
                                 return $components;
                             })
-                            ->columns(2)
+                            ->columns(1)
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

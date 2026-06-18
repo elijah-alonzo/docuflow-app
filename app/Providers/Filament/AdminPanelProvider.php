@@ -28,7 +28,6 @@ class AdminPanelProvider extends PanelProvider
             ->login(Login::class)
             ->passwordReset()
             ->profile()
-            ->darkmode(false)
             ->globalSearch(false)
             ->viteTheme('resources/css/filament/app/theme.css')
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
@@ -57,8 +56,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->breadcrumbs(false)
-            ->font('Figtree');
+            ]);
     }
 }

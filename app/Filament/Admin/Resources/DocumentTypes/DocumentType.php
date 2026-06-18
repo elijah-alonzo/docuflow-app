@@ -21,7 +21,7 @@ class DocumentType extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-duplicate';
 
-    protected static UnitEnum|string|null $navigationGroup = 'System Settings';
+    protected static UnitEnum|string|null $navigationGroup = 'Document Management';
 
     protected static ?string $navigationLabel = 'Document Categories';
 

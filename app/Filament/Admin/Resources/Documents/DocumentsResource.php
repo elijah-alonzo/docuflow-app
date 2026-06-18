@@ -22,7 +22,7 @@ class DocumentsResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Document Management';
 
-    protected static ?string $navigationLabel = 'All Submissions';
+    protected static ?string $navigationLabel = 'Document Submissions';
 
     protected static ?int $navigationSort = 10;
 

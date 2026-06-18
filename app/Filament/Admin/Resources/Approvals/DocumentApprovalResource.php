@@ -23,7 +23,7 @@ class DocumentApprovalResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Document Management';
 
-    protected static ?string $navigationLabel = 'Approval Inbox';
+    protected static ?string $navigationLabel = 'Document Approval';
 
     protected static ?int $navigationSort = 11;
 

@@ -29,7 +29,6 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->profile()
             ->globalSearch(false)
-            ->viteTheme('resources/css/filament/app/theme.css')
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')
             ->pages([

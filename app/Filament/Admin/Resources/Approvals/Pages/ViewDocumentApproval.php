@@ -23,8 +23,6 @@ class ViewDocumentApproval extends ViewRecord
 {
     protected static string $resource = DocumentApprovalResource::class;
 
-    protected ?string $subheading = 'Review the submitted document, verify the approval history, and perform actions.';
-
     protected function getHeaderActions(): array
     {
         /** @var WorkflowEngine $engine */
@@ -33,7 +31,6 @@ class ViewDocumentApproval extends ViewRecord
         return [
             Action::make('approve')
                 ->label(fn () => $this->record->currentStep?->action_label ?: 'Approve')
-                ->icon('heroicon-m-check-circle')
                 ->color('success')
                 ->visible(fn (): bool => in_array('approve', $engine->getAvailableActions($this->record, auth()->user())))
                 ->form([
@@ -48,8 +45,7 @@ class ViewDocumentApproval extends ViewRecord
                 }),
 
             Action::make('reject')
-                ->label('Reject / Return')
-                ->icon('heroicon-m-x-circle')
+                ->label('Reject')
                 ->color('danger')
                 ->visible(fn (): bool => in_array('reject', $engine->getAvailableActions($this->record, auth()->user())))
                 ->form([
@@ -65,8 +61,7 @@ class ViewDocumentApproval extends ViewRecord
                 }),
 
             Action::make('download')
-                ->label('Download Original')
-                ->icon('heroicon-m-arrow-down-tray')
+                ->label('Download')
                 ->color('gray')
                 ->visible(fn (): bool => filled($this->record->file_path))
                 ->action(fn () => $this->downloadDocument()),

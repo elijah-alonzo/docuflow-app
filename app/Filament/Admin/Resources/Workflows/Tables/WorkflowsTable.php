@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentTypes\Tables;
+namespace App\Filament\Admin\Resources\Workflows\Tables;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class DocumentTypesTable
+class WorkflowsTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,13 +17,13 @@ class DocumentTypesTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('workflow.name')
-                    ->label('Workflow Template')
+                TextColumn::make('description')
+                    ->limit(50),
+                TextColumn::make('steps_count')
+                    ->label('Stages')
+                    ->counts('steps')
                     ->badge()
-                    ->color('primary'),
-                IconColumn::make('is_active')
-                    ->boolean()
-                    ->sortable(),
+                    ->color('info'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

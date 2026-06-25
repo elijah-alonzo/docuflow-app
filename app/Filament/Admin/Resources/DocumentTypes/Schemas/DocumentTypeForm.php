@@ -23,7 +23,7 @@ class DocumentTypeForm
                             ->maxLength(255)
                             ->prefixIcon('heroicon-o-document-text'),
                         Select::make('workflow_id')
-                            ->label('Workflow Template')
+                            ->label('Document Workflow')
                             ->relationship('workflow', 'name')
                             ->preload()
                             ->required()

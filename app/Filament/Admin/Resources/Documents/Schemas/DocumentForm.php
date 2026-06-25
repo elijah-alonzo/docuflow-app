@@ -43,7 +43,7 @@ class DocumentForm
                                 }
                             }),
                         Select::make('workflow_id')
-                            ->label('Workflow Template')
+                            ->label('Document Workflow')
                             ->relationship('workflow', 'name')
                             ->required()
                             ->live()

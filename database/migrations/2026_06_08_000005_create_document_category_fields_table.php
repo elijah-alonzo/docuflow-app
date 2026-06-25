@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('document_type_fields', function (Blueprint $table) {
+        Schema::create('document_category_fields', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_type_id')->constrained('document_types')->cascadeOnDelete();
+            $table->foreignId('document_category_id')->constrained('document_categories')->cascadeOnDelete();
             $table->string('field_key');
             $table->string('label');
             $table->string('type')->default('text');
@@ -20,12 +20,12 @@ return new class extends Migration
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
 
-            $table->unique(['document_type_id', 'field_key']);
+            $table->unique(['document_category_id', 'field_key']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('document_type_fields');
+        Schema::dropIfExists('document_category_fields');
     }
 };

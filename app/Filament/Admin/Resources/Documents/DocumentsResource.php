@@ -26,6 +26,16 @@ class DocumentsResource extends Resource
 
     protected static ?int $navigationSort = 10;
 
+    public static function getModelLabel(): string
+    {
+        return 'Document Submission';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Document Submissions';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return DocumentForm::configure($schema);

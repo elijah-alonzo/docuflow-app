@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('document_types', function (Blueprint $table) {
+        Schema::create('document_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('workflow_id')->nullable()->constrained('workflows')->nullOnDelete();
+            $table->foreignId('document_workflow_id')->nullable()->constrained('document_workflows')->nullOnDelete();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
@@ -20,6 +20,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('document_types');
+        Schema::dropIfExists('document_categories');
     }
 };

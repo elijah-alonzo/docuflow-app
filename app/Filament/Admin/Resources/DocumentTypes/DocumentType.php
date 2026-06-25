@@ -27,6 +27,16 @@ class DocumentType extends Resource
 
     protected static ?int $navigationSort = 31;
 
+    public static function getModelLabel(): string
+    {
+        return 'Document Category';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Document Categories';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return DocumentTypeForm::configure($schema);

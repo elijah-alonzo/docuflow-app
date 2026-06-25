@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('document_approvals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_id')->constrained('documents')->cascadeOnDelete();
-            $table->foreignId('workflow_step_id')->nullable()->constrained('workflow_steps')->nullOnDelete();
+            $table->foreignId('document_submission_id')->constrained('document_submissions')->cascadeOnDelete();
+            $table->foreignId('document_workflow_step_id')->nullable()->constrained('document_workflow_steps')->nullOnDelete();
             $table->foreignId('approved_by')->constrained('users')->cascadeOnDelete();
             $table->string('status');
             $table->text('remarks')->nullable();

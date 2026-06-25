@@ -20,11 +20,21 @@ class WorkflowsResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
-    protected static UnitEnum|string|null $navigationGroup = 'System Settings';
+    protected static UnitEnum|string|null $navigationGroup = 'Document Management';
 
-    protected static ?string $navigationLabel = 'Workflow Templates';
+    protected static ?string $navigationLabel = 'Document Workflows';
 
     protected static ?int $navigationSort = 30;
+
+    public static function getModelLabel(): string
+    {
+        return 'Document Workflow';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Document Workflows';
+    }
 
     public static function form(Schema $schema): Schema
     {

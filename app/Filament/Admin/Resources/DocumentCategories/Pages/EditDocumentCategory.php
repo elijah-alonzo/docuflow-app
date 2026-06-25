@@ -16,21 +16,9 @@ class EditDocumentCategory extends EditRecord
         return static::getResource()::getUrl('index');
     }
 
-    protected function getFormActions(): array
-    {
-        return [];
-    }
-
     protected function getHeaderActions(): array
     {
         return [
-            $this->getSaveFormAction(),
-
-            Action::make('cancel')
-                ->label('Cancel')
-                ->url(static::getResource()::getUrl('index'))
-                ->color('gray'),
-
             DeleteAction::make(),
         ];
     }

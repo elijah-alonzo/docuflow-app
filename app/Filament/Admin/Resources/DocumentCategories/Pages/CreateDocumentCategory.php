@@ -16,20 +16,4 @@ class CreateDocumentCategory extends CreateRecord
     {
         return static::getResource()::getUrl('index');
     }
-
-    protected function getFormActions(): array
-    {
-        return [];
-    }
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getCreateFormAction(),
-
-            Action::make('cancel')
-                ->label('Cancel')
-                ->url(static::getResource()::getUrl('index'))
-                ->color('gray'),
-        ];
-    }
 }

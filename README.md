@@ -1,1 +1,1 @@
-![Under Development](public/UNDERDEV.jpg)(https://elijah-alonzo.vercel.app)
+[![Elijah Alonzo](public/UNDERDEV.jpg)](https://elijah-alonzo.vercel.app)

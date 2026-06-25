@@ -22,6 +22,20 @@ class DocumentCategoriesTable
                     ->label('Document Workflow')
                     ->badge()
                     ->color('primary'),
+                TextColumn::make('allowed_creator_roles')
+                    ->label('Creator Roles')
+                    ->badge()
+                    ->color('info')
+                    ->separator(',')
+                    ->placeholder('None configured')
+                    ->toggleable(),
+                TextColumn::make('allowed_uploader_roles')
+                    ->label('Uploader Roles')
+                    ->badge()
+                    ->color('warning')
+                    ->separator(',')
+                    ->placeholder('None configured')
+                    ->toggleable(),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->sortable(),

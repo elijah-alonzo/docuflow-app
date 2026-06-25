@@ -41,7 +41,7 @@ class DocumentCategoryForm
                     ->description('Choose which roles can manage submission instances for this category, and which roles are allowed to submit documents.')
                     ->schema([
                         Select::make('allowed_creator_roles')
-                            ->label('Creator / Manager Roles')
+                            ->label('Manager Roles')
                             ->helperText('Users with these roles can create and manage submission instances for this category.')
                             ->multiple()
                             ->options(fn (): array => Role::query()
@@ -49,6 +49,7 @@ class DocumentCategoryForm
                                 ->orderBy('name')
                                 ->pluck('name', 'name')
                                 ->all())
+                            ->required()
                             ->searchable()
                             ->preload()
                             ->prefixIcon('heroicon-o-user-group'),
@@ -61,6 +62,7 @@ class DocumentCategoryForm
                                 ->orderBy('name')
                                 ->pluck('name', 'name')
                                 ->all())
+                            ->required()
                             ->searchable()
                             ->preload()
                             ->prefixIcon('heroicon-o-arrow-up-tray'),

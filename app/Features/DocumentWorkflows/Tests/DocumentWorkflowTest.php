@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Features\Workflows\Tests;
+namespace App\Features\DocumentWorkflows\Tests;
 
-use App\Features\Workflows\Models\Workflow;
-use App\Features\Workflows\Models\WorkflowStep;
-use App\Features\Documents\Models\Document;
-use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\DocumentWorkflows\Models\DocumentWorkflow;
+use App\Features\DocumentWorkflows\Models\DocumentWorkflowStep;
+use App\Features\DocumentSubmissions\Models\DocumentSubmission;
+use App\Features\DocumentCategories\Models\DocumentCategory;
 use App\Features\Roles\Models\Role;
 use App\Features\Users\Models\User;
-use App\Features\Workflows\Services\WorkflowEngine;
+use App\Features\DocumentWorkflows\Services\DocumentWorkflowEngine;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class WorkflowTest extends TestCase
+class DocumentWorkflowTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -40,13 +40,13 @@ class WorkflowTest extends TestCase
         $deanUser->assignRole($roleDean);
 
         // 3. Setup Workflow Template
-        $workflow = Workflow::create([
+        $workflow = DocumentWorkflow::create([
             'name' => 'Grading Workflow',
             'description' => 'Grading sheets approval template',
         ]);
 
-        $step1 = WorkflowStep::create([
-            'workflow_id' => $workflow->id,
+        $step1 = DocumentWorkflowStep::create([
+            'document_workflow_id' => $workflow->id,
             'step_order' => 1,
             'step_name' => 'Staff Endorsement',
             'assigned_role_id' => $roleStaff->id,
@@ -55,8 +55,8 @@ class WorkflowTest extends TestCase
             'reject_status' => 'returned',
         ]);
 
-        $step2 = WorkflowStep::create([
-            'workflow_id' => $workflow->id,
+        $step2 = DocumentWorkflowStep::create([
+            'document_workflow_id' => $workflow->id,
             'step_order' => 2,
             'step_name' => 'Dean Approval',
             'assigned_role_id' => $roleDean->id,
@@ -65,17 +65,17 @@ class WorkflowTest extends TestCase
             'reject_status' => 'returned',
         ]);
 
-        // 4. Setup Document Type
-        $docType = DocumentType::create([
+        // 4. Setup Document Category
+        $docCategory = DocumentCategory::create([
             'name' => 'Grading Sheet',
-            'workflow_id' => $workflow->id,
+            'document_workflow_id' => $workflow->id,
             'is_active' => true,
         ]);
 
         // 5. Create Document Submission
-        $document = Document::create([
-            'document_type_id' => $docType->id,
-            'workflow_id' => $workflow->id,
+        $document = DocumentSubmission::create([
+            'document_category_id' => $docCategory->id,
+            'document_workflow_id' => $workflow->id,
             'title' => 'First Semester Grades',
             'file_path' => 'documents/grades.pdf',
             'submitted_by' => $staffUser->id,
@@ -83,8 +83,8 @@ class WorkflowTest extends TestCase
             'current_step_id' => $step1->id,
         ]);
 
-        /** @var WorkflowEngine $engine */
-        $engine = app(WorkflowEngine::class);
+        /** @var DocumentWorkflowEngine $engine */
+        $engine = app(DocumentWorkflowEngine::class);
 
         // 6. Test current step
         $this->assertEquals($step1->id, $engine->getCurrentStep($document)->id);

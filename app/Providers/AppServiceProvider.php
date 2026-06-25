@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(ModelActionObserver::class);
 
         if (function_exists('view')) {
-            view()->addLocation(app_path('Features/Workflows/Views'));
+            view()->addLocation(app_path('Features/DocumentWorkflows/Views'));
             view()->addLocation(app_path('Features/Approvals/Views'));
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Workflows\RelationManagers;
+namespace App\Filament\Admin\Resources\DocumentWorkflows\RelationManagers;
 
 use App\Features\Roles\Models\Role;
 use Filament\Forms;
@@ -8,17 +8,15 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
-
-// Correct Filament v4 Action Imports
 use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 
-class WorkflowStepsRelationManager extends RelationManager
+class DocumentWorkflowStepsRelationManager extends RelationManager
 {
     protected static string $relationship = 'steps';
 
-    protected static ?string $title = 'Workflow Stages';
+    protected static ?string $title = 'Document Workflow Stages';
 
     public function form(Schema $schema): Schema
     {
@@ -88,7 +86,6 @@ class WorkflowStepsRelationManager extends RelationManager
                     ->color('danger'),
             ])
             ->headerActions([
-                // Cleaned: Removed "Tables\Actions\" prefix
                 CreateAction::make()
                     ->label('Add Stage')
                     ->mutateFormDataUsing(function (array $data): array {
@@ -97,7 +94,6 @@ class WorkflowStepsRelationManager extends RelationManager
                     }),
             ])
             ->actions([
-                // Cleaned: Removed "Tables\Actions\" prefix
                 EditAction::make(),
                 DeleteAction::make(),
             ]);

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Features\DocumentTypeFields\Models;
+namespace App\Features\DocumentCategoryFields\Models;
 
-use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\DocumentCategories\Models\DocumentCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DocumentTypeField extends Model
+class DocumentCategoryField extends Model
 {
+    protected $table = 'document_category_fields';
+
     public const TYPES = [
         'text' => 'Text',
         'textarea' => 'Long Text',
@@ -18,7 +20,7 @@ class DocumentTypeField extends Model
     ];
 
     protected $fillable = [
-        'document_type_id',
+        'document_category_id',
         'field_key',
         'label',
         'type',
@@ -34,8 +36,8 @@ class DocumentTypeField extends Model
         'sort_order' => 'integer',
     ];
 
-    public function documentType(): BelongsTo
+    public function documentCategory(): BelongsTo
     {
-        return $this->belongsTo(DocumentType::class);
+        return $this->belongsTo(DocumentCategory::class, 'document_category_id');
     }
 }

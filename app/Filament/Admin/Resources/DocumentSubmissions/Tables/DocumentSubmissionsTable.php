@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Documents\Tables;
+namespace App\Filament\Admin\Resources\DocumentSubmissions\Tables;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
@@ -8,7 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class DocumentsTable
+class DocumentSubmissionsTable
 {
     public static function configure(Table $table): Table
     {
@@ -19,8 +19,8 @@ class DocumentsTable
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('documentType.name')
-                    ->label('Type')
+                TextColumn::make('documentCategory.name')
+                    ->label('Category')
                     ->badge()
                     ->color('primary'),
                 TextColumn::make('submittedBy.full_name')

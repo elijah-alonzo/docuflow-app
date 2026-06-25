@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentTypes\Pages;
+namespace App\Filament\Admin\Resources\DocumentSubmissions\Pages;
 
-use App\Filament\Admin\Resources\DocumentTypes\DocumentType;
+use App\Filament\Admin\Resources\DocumentSubmissions\DocumentSubmissionResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditDocumentType extends EditRecord
+class EditDocumentSubmission extends EditRecord
 {
-    protected static string $resource = DocumentType::class;
+    protected static string $resource = DocumentSubmissionResource::class;
 
     protected function getRedirectUrl(): string
     {

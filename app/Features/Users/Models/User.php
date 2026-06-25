@@ -4,7 +4,7 @@ namespace App\Features\Users\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
-use App\Features\Documents\Models\Document;
+use App\Features\DocumentSubmissions\Models\DocumentSubmission;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,9 +44,9 @@ class User extends Authenticatable
         return $this->full_name;
     }
 
-    public function documents(): HasMany
+    public function documentSubmissions(): HasMany
     {
-        return $this->hasMany(Document::class, 'submitted_by');
+        return $this->hasMany(DocumentSubmission::class, 'submitted_by');
     }
 
     /**

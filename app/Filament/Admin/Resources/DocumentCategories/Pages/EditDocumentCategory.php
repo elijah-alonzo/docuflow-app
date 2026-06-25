@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Documents\Pages;
+namespace App\Filament\Admin\Resources\DocumentCategories\Pages;
 
-use App\Filament\Admin\Resources\Documents\DocumentsResource;
+use App\Filament\Admin\Resources\DocumentCategories\DocumentCategoryResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditDocument extends EditRecord
+class EditDocumentCategory extends EditRecord
 {
-    protected static string $resource = DocumentsResource::class;
+    protected static string $resource = DocumentCategoryResource::class;
 
     protected function getRedirectUrl(): string
     {

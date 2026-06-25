@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentTypes\Tables;
+namespace App\Filament\Admin\Resources\DocumentCategories\Tables;
 
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
@@ -9,7 +9,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class DocumentTypesTable
+class DocumentCategoriesTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,7 +18,7 @@ class DocumentTypesTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('workflow.name')
+                TextColumn::make('documentWorkflow.name')
                     ->label('Document Workflow')
                     ->badge()
                     ->color('primary'),

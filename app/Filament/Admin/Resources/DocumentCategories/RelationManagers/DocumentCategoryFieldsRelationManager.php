@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentTypes\Relations;
+namespace App\Filament\Admin\Resources\DocumentCategories\RelationManagers;
 
-use App\Features\DocumentTypeFields\Models\DocumentTypeField;
+use App\Features\DocumentCategoryFields\Models\DocumentCategoryField;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -20,7 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-class RelationManager extends BaseRelationManager
+class DocumentCategoryFieldsRelationManager extends BaseRelationManager
 {
     protected static string $relationship = 'fields';
 
@@ -53,7 +53,7 @@ class RelationManager extends BaseRelationManager
                             ->maxLength(255),
 
                         Select::make('type')
-                            ->options(DocumentTypeField::TYPES)
+                            ->options(DocumentCategoryField::TYPES)
                             ->default('text')
                             ->required()
                             ->prefixIcon('heroicon-o-list-bullet')
@@ -98,7 +98,7 @@ class RelationManager extends BaseRelationManager
                 TextColumn::make('field_key')->badge()->color('gray'),
                 TextColumn::make('type')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => DocumentTypeField::TYPES[$state] ?? $state),
+                    ->formatStateUsing(fn (string $state): string => DocumentCategoryField::TYPES[$state] ?? $state),
                 IconColumn::make('is_required')->label('Required')->boolean(),
             ])
             ->headerActions([

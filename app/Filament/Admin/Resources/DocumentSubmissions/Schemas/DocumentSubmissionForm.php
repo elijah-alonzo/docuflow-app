@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Documents\Schemas;
+namespace App\Filament\Admin\Resources\DocumentSubmissions\Schemas;
 
-use App\Features\DocumentTypes\Models\DocumentType;
+use App\Features\DocumentCategories\Models\DocumentCategory;
 use App\Features\Users\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -12,10 +12,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 
-class DocumentForm
+class DocumentSubmissionForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -28,23 +27,23 @@ class DocumentForm
                             ->required()
                             ->maxLength(255)
                             ->prefixIcon('heroicon-o-pencil-square'),
-                        Select::make('document_type_id')
-                            ->label('Document Type')
-                            ->options(fn () => DocumentType::where('is_active', true)->pluck('name', 'id'))
+                        Select::make('document_category_id')
+                            ->label('Document Category')
+                            ->options(fn () => DocumentCategory::where('is_active', true)->pluck('name', 'id'))
                             ->required()
                             ->live()
                             ->prefixIcon('heroicon-o-document-duplicate')
                             ->afterStateUpdated(function ($state, callable $set) {
                                 if ($state) {
-                                    $documentType = DocumentType::find($state);
-                                    if ($documentType && $documentType->workflow_id) {
-                                        $set('workflow_id', $documentType->workflow_id);
+                                    $documentCategory = DocumentCategory::find($state);
+                                    if ($documentCategory && $documentCategory->document_workflow_id) {
+                                        $set('document_workflow_id', $documentCategory->document_workflow_id);
                                     }
                                 }
                             }),
-                        Select::make('workflow_id')
+                        Select::make('document_workflow_id')
                             ->label('Document Workflow')
-                            ->relationship('workflow', 'name')
+                            ->relationship('documentWorkflow', 'name')
                             ->required()
                             ->live()
                             ->preload()
@@ -64,17 +63,17 @@ class DocumentForm
                             ->columnSpanFull(),
                         Grid::make()
                             ->schema(function (callable $get) {
-                                $documentTypeId = $get('document_type_id');
-                                if (!$documentTypeId) {
+                                $documentCategoryId = $get('document_category_id');
+                                if (!$documentCategoryId) {
                                     return [];
                                 }
 
-                                $documentType = DocumentType::find($documentTypeId);
-                                if (!$documentType) {
+                                $documentCategory = DocumentCategory::find($documentCategoryId);
+                                if (!$documentCategory) {
                                     return [];
                                 }
 
-                                $fields = $documentType->fields;
+                                $fields = $documentCategory->fields;
                                 $components = [];
 
                                 foreach ($fields as $field) {

@@ -69,4 +69,46 @@ class DocumentSubmission extends Model
 
         return trim("{$category} — {$creator} ({$date})");
     }
+
+    /**
+     * Card title for the App panel dashboard: the value of the document
+     * category's first configured field (lowest sort_order), falling back
+     * to the category name when no value is set yet.
+     */
+    public function getCardTitleAttribute(): string
+    {
+        $firstField = $this->documentCategory?->fields?->first();
+
+        if ($firstField) {
+            $value = $this->metadata[$firstField->field_key] ?? null;
+
+            if (filled($value)) {
+                return (string) $value;
+            }
+        }
+
+        return $this->documentCategory?->name ?? 'Document Submission';
+    }
+
+    /**
+     * The "document type" line shown on the card — the category name.
+     */
+    public function getCardTypeAttribute(): string
+    {
+        return $this->documentCategory?->name ?? 'Document';
+    }
+
+    /**
+     * Badge color for the status pill, matching the convention used in
+     * DocumentSubmissionsTable.
+     */
+    public function getCardStatusColorAttribute(): string
+    {
+        return match ($this->status) {
+            'approved' => 'success',
+            'rejected' => 'danger',
+            'pending' => 'warning',
+            default => 'gray',
+        };
+    }
 }

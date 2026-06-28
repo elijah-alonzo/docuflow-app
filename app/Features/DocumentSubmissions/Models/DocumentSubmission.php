@@ -6,7 +6,7 @@ use App\Features\DocumentProcesses\Models\DocumentProcess;
 use App\Features\DocumentProcesses\Models\DocumentProcessStage;
 use App\Features\DocumentCategories\Models\DocumentCategory;
 use App\Features\Users\Models\User;
-use App\Features\Approvals\Models\DocumentApproval;
+use App\Features\DocumentApprovals\Models\DocumentApproval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

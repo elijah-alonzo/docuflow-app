@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Features\Users\Models\User;
 use App\Features\Logs\Observers\ModelActionObserver;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,9 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
         User::observe(ModelActionObserver::class);
 
-        if (function_exists('view')) {
-            view()->addLocation(app_path('Features/DocumentWorkflows/Views'));
-            view()->addLocation(app_path('Features/Approvals/Views'));
-        }
+        View::addLocation(app_path('Filament/App/Custom'));
+        View::addLocation(app_path('Features/DocumentApprovals/Views'));
     }
 }

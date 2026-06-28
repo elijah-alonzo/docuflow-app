@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\Approvals\Models;
+namespace App\Features\DocumentApprovals\Models;
 
 use App\Features\DocumentProcesses\Models\DocumentProcessStage;
 use App\Features\DocumentSubmissions\Models\DocumentSubmission;

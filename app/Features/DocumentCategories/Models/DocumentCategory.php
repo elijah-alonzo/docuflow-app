@@ -4,7 +4,7 @@ namespace App\Features\DocumentCategories\Models;
 
 use App\Features\DocumentProcesses\Models\DocumentProcess;
 use App\Features\DocumentSubmissions\Models\DocumentSubmission;
-use App\Features\DocumentCategoryFields\Models\DocumentCategoryField;
+use App\Features\DocumentCategories\Models\DocumentCategoryField;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

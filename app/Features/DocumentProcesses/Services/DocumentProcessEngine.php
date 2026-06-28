@@ -6,7 +6,7 @@ use App\Features\DocumentSubmissions\Models\DocumentSubmission;
 use App\Features\Users\Models\User;
 use App\Features\Roles\Models\Role;
 use App\Features\DocumentProcesses\Models\DocumentProcessStage;
-use App\Features\Approvals\Services\ApprovalService;
+use App\Features\DocumentApprovals\Services\ApprovalService;
 use App\Features\DocumentSubmissions\Services\DocumentSubmissionStatusService;
 
 class DocumentProcessEngine

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\DocumentCategoryFields\Models;
+namespace App\Features\DocumentCategories\Models;
 
 use App\Features\DocumentCategories\Models\DocumentCategory;
 use Illuminate\Database\Eloquent\Model;

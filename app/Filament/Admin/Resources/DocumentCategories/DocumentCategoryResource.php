@@ -5,7 +5,7 @@ namespace App\Filament\Admin\Resources\DocumentCategories;
 use App\Filament\Admin\Resources\DocumentCategories\Pages\CreateDocumentCategory;
 use App\Filament\Admin\Resources\DocumentCategories\Pages\EditDocumentCategory;
 use App\Filament\Admin\Resources\DocumentCategories\Pages\ListDocumentCategories;
-use App\Filament\Admin\Resources\DocumentCategories\RelationManagers\DocumentCategoryFieldsRelationManager;
+use App\Filament\Admin\Resources\DocumentCategories\RelationManagers\DocumentCategoryFields;
 use App\Filament\Admin\Resources\DocumentCategories\Schemas\DocumentCategoryForm;
 use App\Filament\Admin\Resources\DocumentCategories\Tables\DocumentCategoriesTable;
 use App\Features\DocumentCategories\Models\DocumentCategory as DocumentCategoryModel;
@@ -50,7 +50,7 @@ class DocumentCategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            DocumentCategoryFieldsRelationManager::class,
+            DocumentCategoryFields::class,
         ];
     }
 

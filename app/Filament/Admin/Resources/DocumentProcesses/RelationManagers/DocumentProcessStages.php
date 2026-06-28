@@ -12,7 +12,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class DocumentProcessStagesRelationManager extends RelationManager
+class DocumentProcessStages extends RelationManager
 {
     protected static string $relationship = 'stages';
 

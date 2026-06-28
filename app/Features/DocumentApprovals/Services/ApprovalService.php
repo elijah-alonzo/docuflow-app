@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Features\Approvals\Services;
+namespace App\Features\DocumentApprovals\Services;
 
-use App\Features\Approvals\Models\DocumentApproval;
+use App\Features\DocumentApprovals\Models\DocumentApproval;
 use App\Features\DocumentProcesses\Models\DocumentProcessStage;
 use App\Features\DocumentSubmissions\Models\DocumentSubmission;
 use App\Features\Users\Models\User;

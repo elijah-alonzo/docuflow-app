@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\DocumentCategories\RelationManagers;
 
-use App\Features\DocumentCategoryFields\Models\DocumentCategoryField;
+use App\Features\DocumentCategories\Models\DocumentCategoryField;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -20,7 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-class DocumentCategoryFieldsRelationManager extends BaseRelationManager
+class DocumentCategoryFields extends BaseRelationManager
 {
     protected static string $relationship = 'fields';
 

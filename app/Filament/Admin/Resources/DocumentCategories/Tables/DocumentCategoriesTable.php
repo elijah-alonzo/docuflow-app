@@ -20,8 +20,8 @@ class DocumentCategoriesTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('documentWorkflow.name')
-                    ->label('Document Workflow')
+                TextColumn::make('documentProcess.name')
+                    ->label('Document Process')
                     ->badge()
                     ->color('primary'),
                 TextColumn::make('allowed_creator_roles')

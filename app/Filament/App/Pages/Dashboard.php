@@ -46,7 +46,7 @@ class Dashboard extends BaseDashboard
             })
             ->with([
                 'documentCategory.fields',
-                'currentStep',
+                'currentProcessStage',
             ])
             ->orderByDesc('updated_at')
             ->get();

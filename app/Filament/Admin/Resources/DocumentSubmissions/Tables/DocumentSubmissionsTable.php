@@ -37,7 +37,7 @@ class DocumentSubmissionsTable
                         'pending' => 'warning',
                         default => 'gray',
                     }),
-                TextColumn::make('currentStep.step_name')
+                TextColumn::make('currentProcessStage.stage_name')
                     ->label('Current Stage')
                     ->default('Completed')
                     ->badge()

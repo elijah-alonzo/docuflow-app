@@ -21,7 +21,7 @@ class DocumentSubmissionForm
         return $schema
             ->components([
                 Section::make('New Document Submission')
-                    ->description('Initiate a document submission, select the workflow, and assign uploaders.')
+                    ->description('Initiate a document submission, select the process, and assign uploaders.')
                     ->schema([
                         Select::make('document_category_id')
                             ->label('Document Category')
@@ -32,8 +32,8 @@ class DocumentSubmissionForm
                             ->afterStateUpdated(function ($state, callable $set) {
                                 if ($state) {
                                     $documentCategory = DocumentCategory::find($state);
-                                    if ($documentCategory && $documentCategory->document_workflow_id) {
-                                        $set('document_workflow_id', $documentCategory->document_workflow_id);
+                                    if ($documentCategory && $documentCategory->document_process_id) {
+                                        $set('document_process_id', $documentCategory->document_process_id);
                                     }
                                 }
                             }),

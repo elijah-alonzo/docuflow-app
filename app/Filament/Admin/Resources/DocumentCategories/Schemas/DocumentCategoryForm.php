@@ -26,9 +26,9 @@ class DocumentCategoryForm
                                 ->maxLength(255)
                                 ->prefixIcon('heroicon-o-document-text'),
 
-                            Select::make('document_workflow_id')
-                                ->label('Document Workflow')
-                                ->relationship('documentWorkflow', 'name')
+                            Select::make('document_process_id')
+                                ->label('Document Process')
+                                ->relationship('documentProcess', 'name')
                                 ->preload()
                                 ->required()
                                 ->prefixIcon('heroicon-o-arrow-path-rounded-square'),

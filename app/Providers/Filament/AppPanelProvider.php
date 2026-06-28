@@ -27,9 +27,6 @@ class AppPanelProvider extends PanelProvider
             ->path('app')
             ->login()
             ->topNavigation(true)
-            ->colors([
-                'primary' => Color::Amber,
-            ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\Filament\App\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\Filament\App\Pages')
             ->pages([
@@ -52,6 +49,11 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->brandLogo(asset('app.png')) 
+            ->brandLogoHeight('2rem')
+            ->colors([
+            'primary' => Color::hex('#2dbcc5'),
             ]);
     }
 }

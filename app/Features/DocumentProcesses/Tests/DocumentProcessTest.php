@@ -1,34 +1,40 @@
 <?php
 
-namespace App\Features\DocumentWorkflows\Tests;
+namespace App\Features\DocumentProcesses\Tests;
 
-use App\Features\DocumentWorkflows\Models\DocumentWorkflow;
-use App\Features\DocumentWorkflows\Models\DocumentWorkflowStep;
+use App\Features\DocumentProcesses\Models\DocumentProcess;
+use App\Features\DocumentProcesses\Models\DocumentProcessStage;
+use App\Features\DocumentProcesses\Services\DocumentProcessEngine;
 use App\Features\DocumentSubmissions\Models\DocumentSubmission;
 use App\Features\DocumentCategories\Models\DocumentCategory;
 use App\Features\Roles\Models\Role;
 use App\Features\Users\Models\User;
-use App\Features\DocumentWorkflows\Services\DocumentWorkflowEngine;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class DocumentWorkflowTest extends TestCase
+class DocumentProcessTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_workflow_steps_transition_and_approval_engine()
+    public function test_process_stages_transition_and_approval_engine()
     {
-        // 1. Setup Roles
-        $roleStaff = Role::create(['name' => 'Staff', 'guard_name' => 'web']);
-        $roleDean = Role::create(['name' => 'Dean', 'guard_name' => 'web']);
+        $roleStaff = Role::create([
+            'name' => 'Staff',
+            'guard_name' => 'web',
+        ]);
 
-        // 2. Setup Users
+        $roleDean = Role::create([
+            'name' => 'Dean',
+            'guard_name' => 'web',
+        ]);
+
         $staffUser = User::create([
             'first_name' => 'Staff',
             'last_name' => 'User',
             'email' => 'staff@test.com',
             'password' => bcrypt('password'),
         ]);
+
         $staffUser->assignRole($roleStaff);
 
         $deanUser = User::create([
@@ -37,6 +43,7 @@ class DocumentWorkflowTest extends TestCase
             'email' => 'dean@test.com',
             'password' => bcrypt('password'),
         ]);
+
         $deanUser->assignRole($roleDean);
 
         $uploaderUser = User::create([
@@ -45,90 +52,81 @@ class DocumentWorkflowTest extends TestCase
             'email' => 'uploader@test.com',
             'password' => bcrypt('password'),
         ]);
+
         $uploaderUser->assignRole($roleStaff);
 
-        // 3. Setup Workflow Template
-        $workflow = DocumentWorkflow::create([
-            'name' => 'Grading Workflow',
-            'description' => 'Grading sheets approval template',
+        $process = DocumentProcess::create([
+            'name' => 'Grading Process',
+            'description' => 'Grading sheets approval process',
         ]);
 
-        $step1 = DocumentWorkflowStep::create([
-            'document_workflow_id' => $workflow->id,
-            'step_order' => 1,
-            'step_name' => 'Staff Endorsement',
+        $stage1 = DocumentProcessStage::create([
+            'document_process_id' => $process->id,
+            'stage_order' => 1,
+            'stage_name' => 'Staff Endorsement',
             'assigned_role_id' => $roleStaff->id,
             'action_label' => 'Endorse',
             'approve_status' => 'to_verify',
             'reject_status' => 'returned',
         ]);
 
-        $step2 = DocumentWorkflowStep::create([
-            'document_workflow_id' => $workflow->id,
-            'step_order' => 2,
-            'step_name' => 'Dean Approval',
+        $stage2 = DocumentProcessStage::create([
+            'document_process_id' => $process->id,
+            'stage_order' => 2,
+            'stage_name' => 'Dean Approval',
             'assigned_role_id' => $roleDean->id,
             'action_label' => 'Approve',
             'approve_status' => 'approved',
             'reject_status' => 'returned',
         ]);
 
-        // 4. Setup Document Category
-        $docCategory = DocumentCategory::create([
+        $documentCategory = DocumentCategory::create([
             'name' => 'Grading Sheet',
-            'document_workflow_id' => $workflow->id,
+            'document_process_id' => $process->id,
             'is_active' => true,
         ]);
 
-        // 5. Create Document Submission
-        // The submission instance is created by the staff user, who then
-        // assigns an uploader responsible for the actual file upload.
         $document = DocumentSubmission::create([
-            'document_category_id' => $docCategory->id,
-            'document_workflow_id' => $workflow->id,
+            'document_category_id' => $documentCategory->id,
+            'document_process_id' => $process->id,
             'file_path' => 'documents/grades.pdf',
             'created_by' => $staffUser->id,
             'status' => 'pending',
-            'current_step_id' => $step1->id,
+            'current_process_stage_id' => $stage1->id,
         ]);
 
         $document->uploaders()->sync([$uploaderUser->id]);
 
-        /** @var DocumentWorkflowEngine $engine */
-        $engine = app(DocumentWorkflowEngine::class);
+        /** @var DocumentProcessEngine $engine */
+        $engine = app(DocumentProcessEngine::class);
 
-        // 6. Test current step
-        $this->assertEquals($step1->id, $engine->getCurrentStep($document)->id);
+        $this->assertEquals($stage1->id, $engine->getCurrentStage($document)->id);
 
-        // 7. Check staff available actions
         $actions = $engine->getAvailableActions($document, $staffUser);
         $this->assertContains('approve', $actions);
         $this->assertContains('reject', $actions);
 
-        // Dean shouldn't have actions at step 1
         $actionsDean = $engine->getAvailableActions($document, $deanUser);
         $this->assertEmpty($actionsDean);
 
-        // 8. Staff Approves Step 1
         $engine->approve($document, $staffUser, 'Looks good, endorsing.');
 
         $document->refresh();
-        $this->assertEquals($step2->id, $document->current_step_id);
+
+        $this->assertEquals($stage2->id, $document->current_process_stage_id);
         $this->assertEquals('to_verify', $document->status);
 
-        // 9. Dean Approves Step 2
         $engine->approve($document, $deanUser, 'Fully approved.');
 
         $document->refresh();
-        $this->assertNull($document->current_step_id);
+
+        $this->assertNull($document->current_process_stage_id);
         $this->assertEquals('approved', $document->status);
 
-        // 10. Audit log entries
         $this->assertCount(2, $document->approvals);
         $this->assertEquals('Looks good, endorsing.', $document->approvals->first()->remarks);
         $this->assertEquals('Fully approved.', $document->approvals->last()->remarks);
 
-        // 11. Ownership and uploader assignment
         $this->assertEquals($staffUser->id, $document->created_by);
         $this->assertTrue($document->uploaders->contains($uploaderUser));
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('document_process_stage', function (Blueprint $table) {
+        Schema::create('document_process_stages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_process_id')->constrained('document_processes')->cascadeOnDelete();
             $table->integer('stage_order');

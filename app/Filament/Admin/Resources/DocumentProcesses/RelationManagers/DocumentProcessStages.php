@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentWorkflows\RelationManagers;
+namespace App\Filament\Admin\Resources\DocumentProcesses\RelationManagers;
 
 use App\Features\Roles\Models\Role;
 use Filament\Actions\CreateAction;

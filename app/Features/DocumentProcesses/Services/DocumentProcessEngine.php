@@ -30,7 +30,7 @@ class DocumentProcessEngine
 
         if ($document->status === 'pending' || $document->status === 'in_progress') {
             return DocumentProcessStage::where('document_process_id', $document->document_process_id)
-                ->orderBy('step_order', 'asc')
+                ->orderBy('stage_order', 'asc')
                 ->first();
         }
 
@@ -69,8 +69,8 @@ class DocumentProcessEngine
         $this->approvalService->logAction($document, $stage, $user, 'approved', $remarks);
 
         $nextStage = DocumentProcessStage::where('document_process_id', $document->document_process_id)
-            ->where('step_order', '>', $stage->step_order)
-            ->orderBy('step_order', 'asc')
+            ->where('stage_order', '>', $stage->stage_order)
+            ->orderBy('stage_order', 'asc')
             ->first();
 
         if ($nextStage) {
@@ -119,8 +119,8 @@ class DocumentProcessEngine
         }
 
         $nextStage = DocumentProcessStage::where('document_process_id', $document->document_process_id)
-            ->where('step_order', '>', $stage->step_order)
-            ->orderBy('step_order', 'asc')
+            ->where('stage_order', '>', $stage->stage_order)
+            ->orderBy('stage_order', 'asc')
             ->first();
 
         if ($nextStage) {
@@ -142,7 +142,7 @@ class DocumentProcessEngine
     public function restartProcess(DocumentSubmission $document): bool
     {
         $firstStage = DocumentProcessStage::where('document_process_id', $document->document_process_id)
-            ->orderBy('step_order', 'asc')
+            ->orderBy('stage_order', 'asc')
             ->first();
 
         if ($firstStage) {

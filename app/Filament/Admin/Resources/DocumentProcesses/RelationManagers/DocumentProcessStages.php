@@ -12,11 +12,11 @@ use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class DocumentWorkflowStagesRelationManager extends RelationManager
+class DocumentProcessStagesRelationManager extends RelationManager
 {
     protected static string $relationship = 'stages';
 
-    protected static ?string $title = 'Document Workflow Stages';
+    protected static ?string $title = 'Document Process Stages';
 
     public function form(Schema $schema): Schema
     {
@@ -61,7 +61,7 @@ class DocumentWorkflowStagesRelationManager extends RelationManager
         return $table
             ->reorderable('stage_order')
             ->defaultSort('stage_order')
-            ->description('Configure the stages for the document workflow.')
+            ->description('Configure the stages for the document processing.')
             ->columns([
                 Tables\Columns\TextColumn::make('stage_order')
                     ->label('#')

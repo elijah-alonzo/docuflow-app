@@ -11,11 +11,11 @@ return new class extends Migration
         Schema::create('document_submissions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_category_id')->constrained('document_categories')->restrictOnDelete();
-            $table->foreignId('document_workflow_id')->constrained('document_workflows')->restrictOnDelete();
+            $table->foreignId('document_process_id')->constrained('document_processes')->restrictOnDelete();
             $table->string('file_path')->nullable();
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('Pending');
-            $table->foreignId('current_step_id')->nullable()->constrained('document_workflow_steps')->nullOnDelete();
+            $table->foreignId('current_process_step_id')->nullable()->constrained('document_process_steps')->nullOnDelete();
             $table->json('metadata')->nullable();
             $table->timestamps();
         });

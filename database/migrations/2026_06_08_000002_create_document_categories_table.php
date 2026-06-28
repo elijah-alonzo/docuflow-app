@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('document_workflow_id')->nullable()->constrained('document_workflows')->nullOnDelete();
+            $table->foreignId('document_process_id')->nullable()->constrained('document_processes')->nullOnDelete();
             $table->boolean('is_active')->default(true);
             $table->json('allowed_creator_roles')->nullable();
             $table->json('allowed_uploader_roles')->nullable();

@@ -8,16 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('document_workflows', function (Blueprint $table) {
+        Schema::create('document_processes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('document_workflow_steps', function (Blueprint $table) {
+        Schema::create('document_process_steps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_workflow_id')->constrained('document_workflows')->cascadeOnDelete();
+            $table->foreignId('document_process_id')->constrained('document_processes')->cascadeOnDelete();
             $table->integer('step_order');
             $table->string('step_name');
             $table->unsignedBigInteger('assigned_role_id');
@@ -32,7 +32,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('document_workflow_steps');
-        Schema::dropIfExists('document_workflows');
+        Schema::dropIfExists('document_process_steps');
+        Schema::dropIfExists('document_processes');
     }
 };

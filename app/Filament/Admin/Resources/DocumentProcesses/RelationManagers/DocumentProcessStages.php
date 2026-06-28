@@ -3,18 +3,18 @@
 namespace App\Filament\Admin\Resources\DocumentWorkflows\RelationManagers;
 
 use App\Features\Roles\Models\Role;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 
-class DocumentWorkflowStepsRelationManager extends RelationManager
+class DocumentWorkflowStagesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'steps';
+    protected static string $relationship = 'stages';
 
     protected static ?string $title = 'Document Workflow Stages';
 
@@ -23,7 +23,7 @@ class DocumentWorkflowStepsRelationManager extends RelationManager
         return $schema
             ->columns(2)
             ->components([
-                Forms\Components\TextInput::make('step_name')
+                Forms\Components\TextInput::make('stage_name')
                     ->label('Stage Name')
                     ->placeholder('e.g. Manager Approval')
                     ->columnSpan(2)
@@ -53,22 +53,22 @@ class DocumentWorkflowStepsRelationManager extends RelationManager
                     ->placeholder('e.g. Rejected by Manager')
                     ->required()
                     ->maxLength(255),
-        ]);
+            ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->reorderable('step_order')
-            ->defaultSort('step_order')
-            ->description('Configure the steps for document process.')
+            ->reorderable('stage_order')
+            ->defaultSort('stage_order')
+            ->description('Configure the stages for the document workflow.')
             ->columns([
-                Tables\Columns\TextColumn::make('step_order')
+                Tables\Columns\TextColumn::make('stage_order')
                     ->label('#')
                     ->width(40)
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('step_name')
+                Tables\Columns\TextColumn::make('stage_name')
                     ->label('Stage Name')
                     ->searchable(),
 
@@ -93,7 +93,8 @@ class DocumentWorkflowStepsRelationManager extends RelationManager
                     ->label('Add Stage')
                     ->createAnother(false)
                     ->mutateFormDataUsing(function (array $data): array {
-                        $data['step_order'] = $this->getOwnerRecord()->steps()->count() + 1;
+                        $data['stage_order'] = $this->getOwnerRecord()->stages()->count() + 1;
+
                         return $data;
                     }),
             ])

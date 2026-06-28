@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentWorkflows\Pages;
+namespace App\Filament\Admin\Resources\DocumentProcesses\Pages;
 
-use App\Filament\Admin\Resources\DocumentWorkflows\DocumentWorkflowResource;
+use App\Filament\Admin\Resources\DocumentProcesses\DocumentProcessResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditDocumentWorkflow extends EditRecord
+class EditDocumentProcess extends EditRecord
 {
-    protected static string $resource = DocumentWorkflowResource::class;
+    protected static string $resource = DocumentProcessResource::class;
 
     protected function getRedirectUrl(): string
     {

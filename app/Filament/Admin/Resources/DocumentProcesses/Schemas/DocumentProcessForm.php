@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Filament\Admin\Resources\DocumentWorkflows\Schemas;
+namespace App\Filament\Admin\Resources\DocumentProcesses\Schemas;
 
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
-class DocumentWorkflowForm
+class DocumentProcessForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Section::make('Document Workflow Details')
-                    ->description('Configure the main workflow settings.')
+                Section::make('Document Process Details')
+                    ->description('Configure the main process settings.')
                     ->schema([
                         TextInput::make('name')
                             ->required()

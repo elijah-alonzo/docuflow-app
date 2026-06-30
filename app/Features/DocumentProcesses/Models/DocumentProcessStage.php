@@ -3,6 +3,7 @@
 namespace App\Features\DocumentProcesses\Models;
 
 use App\Features\Roles\Models\Role;
+use App\Features\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -28,5 +29,16 @@ class DocumentProcessStage extends Model
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'assigned_role_id');
+    }
+
+    public function isAssignableTo(User $user): bool
+    {
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
+
+        $role = $this->role ?? Role::find($this->assigned_role_id);
+
+        return $role !== null && $user->hasRole($role->name);
     }
 }

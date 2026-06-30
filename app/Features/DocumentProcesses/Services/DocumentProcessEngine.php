@@ -4,7 +4,6 @@ namespace App\Features\DocumentProcesses\Services;
 
 use App\Features\DocumentSubmissions\Models\DocumentSubmission;
 use App\Features\Users\Models\User;
-use App\Features\Roles\Models\Role;
 use App\Features\DocumentProcesses\Models\DocumentProcessStage;
 use App\Features\DocumentApprovals\Services\ApprovalService;
 use App\Features\DocumentSubmissions\Services\DocumentSubmissionStatusService;
@@ -45,13 +44,7 @@ class DocumentProcessEngine
             return [];
         }
 
-        if ($user->hasRole('Admin')) {
-            return ['approve', 'reject'];
-        }
-
-        $role = Role::find($stage->assigned_role_id);
-
-        if ($role && $user->hasRole($role->name)) {
+        if ($stage->isAssignableTo($user)) {
             return ['approve', 'reject'];
         }
 
@@ -66,7 +59,7 @@ class DocumentProcessEngine
             return false;
         }
 
-        $this->approvalService->logAction($document, $stage, $user, 'approved', $remarks);
+        $this->approvalService->logAction($document, $stage, $user, 'approved', $remarks, $document->current_cycle);
 
         $nextStage = DocumentProcessStage::where('document_process_id', $document->document_process_id)
             ->where('stage_order', '>', $stage->stage_order)
@@ -98,7 +91,7 @@ class DocumentProcessEngine
             return false;
         }
 
-        $this->approvalService->logAction($document, $stage, $user, 'rejected', $remarks);
+        $this->approvalService->logAction($document, $stage, $user, 'rejected', $remarks, $document->current_cycle);
 
         $document->update([
             'current_process_stage_id' => null,
@@ -139,6 +132,11 @@ class DocumentProcessEngine
         return false;
     }
 
+    /**
+     * Restarts the process back to the first stage after a rejection,
+     * incrementing the cycle counter so the new attempt's approvals are
+     * tracked distinctly from the rejected cycle's history.
+     */
     public function restartProcess(DocumentSubmission $document): bool
     {
         $firstStage = DocumentProcessStage::where('document_process_id', $document->document_process_id)
@@ -149,6 +147,7 @@ class DocumentProcessEngine
             $document->update([
                 'current_process_stage_id' => $firstStage->id,
                 'status' => 'pending',
+                'current_cycle' => $document->current_cycle + 1,
             ]);
 
             return true;

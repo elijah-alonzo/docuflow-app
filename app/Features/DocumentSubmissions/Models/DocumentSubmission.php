@@ -23,11 +23,13 @@ class DocumentSubmission extends Model
         'created_by',
         'status',
         'current_process_stage_id',
+        'current_cycle',
         'metadata',
     ];
 
     protected $casts = [
         'metadata' => 'array',
+        'current_cycle' => 'integer',
     ];
 
     public function documentCategory(): BelongsTo
@@ -65,6 +67,27 @@ class DocumentSubmission extends Model
         return $this->hasMany(DocumentApproval::class, 'document_submission_id');
     }
 
+    /**
+     * Whether the assigned uploader(s)/creator may still edit the uploaded
+     * file. Locked the moment the current cycle has at least one recorded
+     * approval (the first stage approving closes the editing window).
+     * Reopens automatically on rejection + restart, since restartProcess()
+     * increments current_cycle, giving the new cycle a clean slate.
+     */
+    public function canEditFile(): bool
+    {
+        return ! $this->approvals()
+            ->where('cycle', $this->current_cycle)
+            ->where('status', 'approved')
+            ->exists();
+    }
+
+    public function isUploaderOrCreator(User $user): bool
+    {
+        return $this->created_by === $user->id
+            || $this->uploaders->contains('id', $user->id);
+    }
+
     public function getDisplayNameAttribute(): string
     {
         $category = $this->documentCategory?->name ?? 'Document';
@@ -86,7 +109,7 @@ class DocumentSubmission extends Model
             }
         }
 
-        return $this->documentCategory?->name ?? 'Document Submission';
+        return 'Untitled '.($this->documentCategory?->name ?? 'Document');
     }
 
     public function getCardTypeAttribute(): string
@@ -102,5 +125,12 @@ class DocumentSubmission extends Model
             'pending' => 'warning',
             default => 'gray',
         };
+    }
+
+    public function getCardUploaderLabelAttribute(): string
+    {
+        $names = $this->uploaders->pluck('full_name');
+
+        return $names->isNotEmpty() ? $names->implode(', ') : 'Unassigned';
     }
 }

@@ -15,6 +15,7 @@ class DocumentApproval extends Model
     protected $fillable = [
         'document_submission_id',
         'document_process_stage_id',
+        'cycle',
         'approved_by',
         'status',
         'remarks',
@@ -23,6 +24,7 @@ class DocumentApproval extends Model
 
     protected $casts = [
         'acted_at' => 'datetime',
+        'cycle' => 'integer',
     ];
 
     public function documentSubmission(): BelongsTo

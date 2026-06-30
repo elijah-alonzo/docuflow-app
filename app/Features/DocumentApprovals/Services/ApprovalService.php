@@ -14,11 +14,13 @@ class ApprovalService
         ?DocumentProcessStage $stage,
         User $user,
         string $status,
-        ?string $remarks = null
+        ?string $remarks = null,
+        int $cycle = 1
     ): DocumentApproval {
         return DocumentApproval::create([
             'document_submission_id' => $document->id,
             'document_process_stage_id' => $stage?->id,
+            'cycle' => $cycle,
             'approved_by' => $user->id,
             'status' => $status,
             'remarks' => $remarks,

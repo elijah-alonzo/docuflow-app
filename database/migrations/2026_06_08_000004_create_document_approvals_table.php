@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('document_submission_id')->constrained('document_submissions')->cascadeOnDelete();
             $table->foreignId('document_process_stage_id')->nullable()->constrained('document_process_stages')->nullOnDelete();
+            $table->unsignedInteger('cycle')->default(1);
             $table->foreignId('approved_by')->constrained('users')->cascadeOnDelete();
             $table->string('status');
             $table->text('remarks')->nullable();

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('Pending');
             $table->foreignId('current_process_stage_id')->nullable()->constrained('document_process_stages')->nullOnDelete();
+            $table->unsignedInteger('current_cycle')->default(1);
             $table->json('metadata')->nullable();
             $table->timestamps();
         });
